@@ -1,6 +1,6 @@
 package agh.ics.oop.model;
 
-public enum MapDirection {
+public enum MoveDirection {
     NORTH,
     NORTH_EAST,
     EAST,
@@ -24,7 +24,7 @@ public enum MapDirection {
         };
     }
 
-    public static MapDirection valueToMapDirection(int value) {
+    public static MoveDirection valueToMapDirection(int value) {
         return switch (value) {
             case 0 -> NORTH;
             case 1 -> NORTH_EAST;
