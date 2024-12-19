@@ -58,6 +58,8 @@ public class Genes {
             System.out.println("Division by zero");
         }
 
+        //mutacja
+
         return new Genes(newGenes);
     }
 }
