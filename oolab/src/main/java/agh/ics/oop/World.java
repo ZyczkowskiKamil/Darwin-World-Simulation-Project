@@ -13,18 +13,15 @@ public class World {
 
     public static void run() {
 
-        GlobeMap map = new GlobeMap(10,10);
+        GlobeMap map = new GlobeMap(10,10, 10);
         MapVisualizer mapVisualizer = new MapVisualizer(map);
 
         Genes genes = new Genes(new ArrayList<>(List.of(0,1,2,3,4,5,6,7)));
-        Animal animal1 = new Animal(new Vector2d(2,2), genes);
+        Animal animal1 = new Animal(new Vector2d(2,2), genes, 30);
         map.placeAnimal(animal1);
 
-        Animal animal2 = new Animal(new Vector2d(3,3), genes);
+        Animal animal2 = new Animal(new Vector2d(3,3), genes, 30);
         map.placeAnimal(animal2);
-
-        Grass grass = new Grass(new Vector2d(5,5));
-        map.placeGrass(grass);
 
 
 

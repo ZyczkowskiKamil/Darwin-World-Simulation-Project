@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class Genes {
     private final ArrayList<Integer> genesList;
+
     private final static int GENES_LENGTH = 8; // jako parametr
 
     public Genes() {
