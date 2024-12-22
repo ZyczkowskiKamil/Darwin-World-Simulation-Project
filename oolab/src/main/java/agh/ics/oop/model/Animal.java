@@ -8,9 +8,19 @@ public class Animal implements WorldElement {
     private final Genes genes;
     private int nextGene;
 
-    public Animal(Vector2d position, Genes genes) {
+    private int kidsAmount;
+    private int age;
+    private int energy;
+
+    private static final int ENERGY_NEEDED_FOR_MOVEMENT = 1;
+
+    public Animal(Vector2d position, Genes genes, int energy) {
         this.position = position;
         this.genes = genes;
+        this.energy = energy;
+        this.kidsAmount = 0;
+        this.age = 0;
+
         Random rand = new Random();
         this.animalOrientation = MoveDirection.valueToMoveDirection(rand.nextInt(8));
 
@@ -32,6 +42,10 @@ public class Animal implements WorldElement {
     }
 
     public void move(Boundary boundary) {
+        this.age += 1;
+        this.removeEnergy(ENERGY_NEEDED_FOR_MOVEMENT);
+
+
         int rotationNumber = this.genes.getGenesList().get(nextGene);
         nextGene = (nextGene + 1) % 8;
 
@@ -50,6 +64,42 @@ public class Animal implements WorldElement {
             // out of upper or bottom bound
             this.animalOrientation = this.animalOrientation.getOppositeDirection();
         }
+    }
 
+    public int getEnergy() {
+        return energy;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getKidsAmount() {
+        return kidsAmount;
+    }
+
+    public void addEnergy(int energyAmount) {
+        this.energy += energyAmount;
+    }
+
+    public void removeEnergy(int energyAmount) {
+        this.energy -= energyAmount;
+    }
+
+    public boolean winsFight(Animal otherAnimal) {
+        if (this.energy > otherAnimal.getEnergy()) return true;
+        else if (this.energy < otherAnimal.getEnergy()) return false;
+        // energy1 == energy2
+
+        if (this.age > otherAnimal.getAge()) return true;
+        else if (this.age < otherAnimal.getAge()) return false;
+        // age1 == age2
+
+        if (this.kidsAmount > otherAnimal.getKidsAmount()) return true;
+        else if (this.kidsAmount < otherAnimal.getKidsAmount()) return false;
+        // kids1 == kids2
+
+        Random rand = new Random();
+        return rand.nextBoolean();
     }
 }
