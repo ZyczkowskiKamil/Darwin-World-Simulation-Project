@@ -1,5 +1,6 @@
 package agh.ics.oop.model;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class GlobeMap implements WorldMap {
@@ -8,7 +9,21 @@ public class GlobeMap implements WorldMap {
     private final Boundary boundary;
     private final Boundary equatorBoundary;
 
-    private static final int ENERGY_ADDED_AFTER_EATING_GRASS = 3; // Jako parametr
+
+    static Parameters parameters;
+    static {
+        try {
+            parameters = new Parameters();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static final int ENERGY_ADDED_AFTER_EATING_GRASS = parameters.ENERGY_ADDED_AFTER_EATING_GRASS;
+    private static final int START_ANIMAL_NUMBER = parameters.START_ANIMAL_NUMBER;
+    private static final int START_ANIMAL_ENERGY = parameters.START_ANIMAL_ENERGY;
+    private static final int BREEDING_READY_ANIMAL_ENERGY = parameters.BREEDING_READY_ANIMAL_ENERGY;
+    private static final int ENERGY_LOST_IN_REPRODUCTION = parameters.ENERGY_LOST_IN_REPRODUCTION;
 
 
     public GlobeMap(int width, int height, int grassesStartAmount) {
@@ -18,11 +33,13 @@ public class GlobeMap implements WorldMap {
         this.equatorBoundary = new Boundary(new Vector2d(0,height/2-equatorHeight/2), new Vector2d(width-1, height/2+equatorHeight/2-1));
 
         placeGrasses(grassesStartAmount);
-        placeGrasses(grassesStartAmount);
-        placeGrasses(grassesStartAmount);
+//        placeGrasses(grassesStartAmount);
+//        placeGrasses(grassesStartAmount);
+
+        createFirstAnimals();
     }
 
-    private void placeGrasses(int grassesAmount) {
+    public void placeGrasses(int grassesAmount) {
         List<Vector2d> availableNormalPlaces = new ArrayList<>();
         List<Vector2d> availablePreferredPlaces = new ArrayList<>();
 
@@ -96,6 +113,17 @@ public class GlobeMap implements WorldMap {
         this.placeAnimal(animal);
     }
 
+    public void moveAllAnimals() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = new ArrayList<>(animalsAt(position));
+            for (Animal animal : animalList) {
+                move(animal);
+            }
+        }
+    }
+
     @Override
     public ArrayList<Animal> animalsAt(Vector2d position) {
         if (animals.containsKey(position))
@@ -109,32 +137,115 @@ public class GlobeMap implements WorldMap {
         return null;
     }
 
-    private void animalsEatGrass() {
-        for (Vector2d position : animals.keySet()) {
-            if (!grasses.containsKey(position)) continue;
+    public void animalsEatGrass() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
 
-            ArrayList<Animal> animalList = animalsAt(position);
-            Animal winningAnimal = animalList.getFirst();
-            for (Animal animal : animalList) {
-                if (animal.winsFight(winningAnimal)) winningAnimal = animal;
+        for (Vector2d position : positions) {
+            if (!grasses.containsKey(position)) {
+                continue;
             }
 
-            grasses.remove(position);
-            winningAnimal.addEnergy(ENERGY_ADDED_AFTER_EATING_GRASS);
+            Animal winningAnimal = findWinningAnimal(position);
+
+            if (winningAnimal != null) {
+                grasses.remove(position);
+                winningAnimal.addEnergy(ENERGY_ADDED_AFTER_EATING_GRASS);
+            }
         }
     }
 
-    private void removeDeadAnimals() {
-        for (Vector2d position : animals.keySet()) {
-            ArrayList<Animal> animalList = animalsAt(position);
-            ArrayList<Animal> aliveAnimals = new ArrayList<>();
+    public void removeDeadAnimals() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet()); // Create a copy of the key set
 
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = animalsAt(position);
+            animalList.removeIf(animal -> animal.getEnergy() <= 0);  // Remove dead animals directly
+
+            if (animalList.isEmpty()) {
+                animals.remove(position);  // Remove entry if no animals remain
+            } else {
+                animals.put(position, animalList);  // Update the list (optional depending on implementation)
+            }
+        }
+    }
+
+    private void createFirstAnimals() {
+        List<Vector2d> availablePlaces = new ArrayList<>();
+
+        for (int x = boundary.BOTTOM_LEFT().getX(); x <= boundary.TOP_RIGHT().getX(); x++) {
+            for (int y = boundary.BOTTOM_LEFT().getY(); y <= boundary.TOP_RIGHT().getY(); y++) {
+                availablePlaces.add(new Vector2d(x, y));
+            }
+        }
+
+        Collections.shuffle(availablePlaces);
+
+        for (int i = 0; i < START_ANIMAL_NUMBER; i++) {
+            placeAnimal(new Animal(availablePlaces.get(i), new Genes(), START_ANIMAL_ENERGY));
+        }
+    }
+
+    private Animal findWinningAnimal(Vector2d position) {
+        ArrayList<Animal> animalList = animalsAt(position);
+        if (animalList.isEmpty()) {
+            return null;
+        }
+        Animal winningAnimal = animalList.get(0);
+        for (Animal animal : animalList) {
+            if (animal.winsFight(winningAnimal)) winningAnimal = animal;
+        }
+        return winningAnimal;
+    }
+
+    public int numberOfAnimalsAlive() {
+        int count = 0;
+        for (ArrayList<Animal> animalList : animals.values()) {
+            count += animalList.size();  // Sum the size of each list of animals
+        }
+        return count;
+    }
+
+    public void animalAging() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = new ArrayList<>(animalsAt(position));
             for (Animal animal : animalList) {
-                if (animal.getEnergy() > 0)
-                    aliveAnimals.add(animal);
+                animal.addAge(1);
+            }
+        }
+    }
+
+    public void reproducing() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+
+        for (Vector2d position : positions) {
+            if (animalsAt(position).size() < 2) {
+                continue;
             }
 
-            animals.put(position, aliveAnimals);
+            Animal parent1 = findWinningAnimal(position);
+            removeAnimal(parent1);
+            Animal parent2 = findWinningAnimal(position);
+            placeAnimal(parent1);
+
+            if (parent1.getEnergy() >= BREEDING_READY_ANIMAL_ENERGY && parent2.getEnergy() >= BREEDING_READY_ANIMAL_ENERGY) {
+
+                Animal offspring = new Animal(
+                        position,
+                        parent1.getGenes().combineDuringReproducing(
+                                parent1.getEnergy(),
+                                parent2.getEnergy(),
+                                parent2.getGenes()
+                        ),
+                        ENERGY_LOST_IN_REPRODUCTION * 2
+                );
+                parent1.removeEnergy(ENERGY_LOST_IN_REPRODUCTION);
+                parent2.removeEnergy(ENERGY_LOST_IN_REPRODUCTION);
+
+                placeAnimal(offspring);
+            }
+            placeAnimal(parent2);
         }
     }
 }
