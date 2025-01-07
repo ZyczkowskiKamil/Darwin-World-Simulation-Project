@@ -54,9 +54,7 @@ public class Animal implements WorldElement {
     }
 
     public void move(Boundary boundary) {
-        this.age += 1;
         this.removeEnergy(ENERGY_NEEDED_FOR_MOVEMENT);
-
 
         int rotationNumber = this.genes.getGenesList().get(nextGene);
         nextGene = (nextGene + 1) % GENES_LENGTH;

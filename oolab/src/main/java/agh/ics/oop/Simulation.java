@@ -34,7 +34,7 @@ public class Simulation {
             map.animalAging();
             System.out.println(mapVisualizer.draw());
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();  // Restore the interrupted status
                 System.err.println("Simulation interrupted: " + e.getMessage());

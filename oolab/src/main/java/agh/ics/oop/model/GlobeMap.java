@@ -245,7 +245,6 @@ public class GlobeMap implements WorldMap {
 
                 placeAnimal(offspring);
             }
-            placeAnimal(parent2);
         }
     }
 }
