@@ -4,4 +4,4 @@ Autorzy: \
 Kamil Życzkowski \
 Bartosz Budzyn \
 Grupa 6. \
-Utrudnienia: C4 \
+Utrudnienia: C4
