@@ -14,6 +14,6 @@ public class Grass implements WorldElement {
 
     @Override
     public String toString() {
-        return "G";
+        return ".";
     }
 }

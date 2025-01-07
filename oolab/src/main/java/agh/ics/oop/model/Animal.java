@@ -1,8 +1,19 @@
 package agh.ics.oop.model;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 public class Animal implements WorldElement {
+
+    static Parameters parameters;
+    static {
+        try {
+            parameters = new Parameters();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private MoveDirection animalOrientation;
     private Vector2d position;
     private final Genes genes;
@@ -12,9 +23,10 @@ public class Animal implements WorldElement {
     private int age;
     private int energy;
 
-    private static final int ENERGY_NEEDED_FOR_MOVEMENT = 1;
+    private static final int ENERGY_NEEDED_FOR_MOVEMENT = parameters.ENERGY_NEEDED_FOR_MOVEMENT;
+    private static final int GENES_LENGTH = parameters.GENES_LENGTH;
 
-    public Animal(Vector2d position, Genes genes, int energy) {
+    public Animal(Vector2d position, Genes genes, int energy){
         this.position = position;
         this.genes = genes;
         this.energy = energy;
@@ -24,7 +36,7 @@ public class Animal implements WorldElement {
         Random rand = new Random();
         this.animalOrientation = MoveDirection.valueToMoveDirection(rand.nextInt(8));
 
-        nextGene = rand.nextInt(8);
+        nextGene = rand.nextInt(GENES_LENGTH);
     }
 
     @Override
@@ -42,14 +54,13 @@ public class Animal implements WorldElement {
     }
 
     public void move(Boundary boundary) {
-        this.age += 1;
         this.removeEnergy(ENERGY_NEEDED_FOR_MOVEMENT);
 
-
         int rotationNumber = this.genes.getGenesList().get(nextGene);
-        nextGene = (nextGene + 1) % 8;
+        nextGene = (nextGene + 1) % GENES_LENGTH;
 
         this.animalOrientation = MoveDirection.valueToMoveDirection((animalOrientation.moveDirectionToValue()+rotationNumber) % 8);
+        Vector2d originalPosition = this.position;
         this.position = this.position.add(animalOrientation.toUnitVector());
 
         if (this.position.getX() < boundary.BOTTOM_LEFT().getX()) {
@@ -63,6 +74,7 @@ public class Animal implements WorldElement {
         if (this.position.getY() > boundary.TOP_RIGHT().getY() || this.position.getY() < boundary.BOTTOM_LEFT().getY()) {
             // out of upper or bottom bound
             this.animalOrientation = this.animalOrientation.getOppositeDirection();
+            this.position = originalPosition;
         }
     }
 
@@ -74,8 +86,16 @@ public class Animal implements WorldElement {
         return age;
     }
 
+    public void addAge(int ageToAdd) {
+        this.age += ageToAdd;
+    }
+
     public int getKidsAmount() {
         return kidsAmount;
+    }
+
+    public Genes getGenes () {
+        return this.genes;
     }
 
     public void addEnergy(int energyAmount) {
