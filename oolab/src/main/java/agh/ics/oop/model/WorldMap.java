@@ -9,6 +9,8 @@ public interface WorldMap {
     boolean placeGrass(Grass grass);
     void removeGrass(Grass grass);
 
+    boolean isWaterAt(Vector2d position);
+
     /**
      * Moves an animal (if it is present on the map) according to specified direction.
      * If the move is not possible, this method has no effect.
