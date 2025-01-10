@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class Parameters {
     //prowizoryczna wersja, dopóki nie ma interfejsu graficznego
 
+    public int MAP_REFRESH_TIME_MS;
     public int MAP_HEIGHT;
     public int MAP_WIDTH;
-    public boolean WATER_MAP_VARIANT = false;
     public int GRASS_START_AMOUNT;
     public int ENERGY_ADDED_AFTER_EATING_GRASS;
     public int NUMBER_OF_GRASS_GROWING_DAILY;
@@ -22,6 +22,10 @@ public class Parameters {
     public int GENES_LENGTH;
     public boolean AGING_ANIMALS = false;
     public int ENERGY_NEEDED_FOR_MOVEMENT;
+    public int WATER_AREAS_NUMBER;
+    public int WATER_AREAS_MIN_SIZE;
+    public int WATER_AREAS_MAX_SIZE;
+    public int WATER_CHANGE_DAYS;
 
     public Parameters() throws FileNotFoundException {
 
@@ -31,15 +35,15 @@ public class Parameters {
 
             if (scanner.hasNextLine()) {
                 String tmp = scanner.nextLine().split("=")[1];
+                this.MAP_REFRESH_TIME_MS = Integer.parseInt(tmp);
+            }
+            if (scanner.hasNextLine()) {
+                String tmp = scanner.nextLine().split("=")[1];
                 this.MAP_HEIGHT = Integer.parseInt(tmp);
             }
             if (scanner.hasNextLine()) {
                 String tmp = scanner.nextLine().split("=")[1];
                 this.MAP_WIDTH = Integer.parseInt(tmp);
-            }
-            if (scanner.hasNextLine()) {
-                String tmp = scanner.nextLine().split("=")[1];
-                this.WATER_MAP_VARIANT = (tmp.equals("true"));
             }
             if (scanner.hasNextLine()) {
                 String tmp = scanner.nextLine().split("=")[1];
@@ -88,6 +92,22 @@ public class Parameters {
             if (scanner.hasNextLine()) {
                 String tmp = scanner.nextLine().split("=")[1];
                 this.ENERGY_NEEDED_FOR_MOVEMENT = Integer.parseInt(tmp);
+            }
+            if (scanner.hasNextLine()) {
+                String tmp = scanner.nextLine().split("=")[1];
+                this.WATER_AREAS_NUMBER = Integer.parseInt(tmp);
+            }
+            if (scanner.hasNextLine()) {
+                String tmp = scanner.nextLine().split("=")[1];
+                this.WATER_AREAS_MIN_SIZE = Integer.parseInt(tmp);
+            }
+            if (scanner.hasNextLine()) {
+                String tmp = scanner.nextLine().split("=")[1];
+                this.WATER_AREAS_MAX_SIZE = Integer.parseInt(tmp);
+            }
+            if (scanner.hasNextLine()) {
+                String tmp = scanner.nextLine().split("=")[1];
+                this.WATER_CHANGE_DAYS = Integer.parseInt(tmp);
             }
             scanner.close();
         }

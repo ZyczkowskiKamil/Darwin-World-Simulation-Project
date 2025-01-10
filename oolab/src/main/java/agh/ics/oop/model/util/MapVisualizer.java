@@ -66,6 +66,9 @@ public class MapVisualizer {
         else if (this.map.grassAt(currentPosition) != null) {
             return this.map.grassAt(currentPosition).toString();
         }
+        else if (this.map.isWaterAt(currentPosition)) {
+            return "W";
+        }
         return EMPTY_CELL;
     }
 }

@@ -32,22 +32,5 @@ public class World {
     public static void run() throws FileNotFoundException {         //do zmiany po UI
         Simulation simulation = new Simulation();
         simulation.run();
-//        GlobeMap map = new GlobeMap(MAP_WIDTH,MAP_HEIGHT, GRASS_START_AMOUNT);
-//        MapVisualizer mapVisualizer = new MapVisualizer(map);
-//
-//        System.out.println(mapVisualizer.draw());
-//
-//        map.moveAllAnimals();
-//
-//        map.placeAnimal(new Animal(new Vector2d(2,2), new Genes(), -10));
-//        map.placeAnimal(new Animal(new Vector2d(2,2), new Genes(), -10));
-//        System.out.println(mapVisualizer.draw());
-//        System.out.println(map.numberOfAnimalsAlive());
-//        map.animalAging();
-//        map.reproducing();
-//        map.removeDeadAnimals();
-//        map.animalsEatGrass();
-//
-//        System.out.println(mapVisualizer.draw());
     }
 }

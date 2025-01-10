@@ -5,10 +5,10 @@ import java.util.Random;
 
 public class Animal implements WorldElement {
 
-    static Parameters parameters;
+    private final static Parameters PARAMETERS;
     static {
         try {
-            parameters = new Parameters();
+            PARAMETERS = new Parameters();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -16,6 +16,7 @@ public class Animal implements WorldElement {
 
     private MoveDirection animalOrientation;
     private Vector2d position;
+    private Vector2d previousPosition;
     private final Genes genes;
     private int nextGene;
 
@@ -23,11 +24,12 @@ public class Animal implements WorldElement {
     private int age;
     private int energy;
 
-    private static final int ENERGY_NEEDED_FOR_MOVEMENT = parameters.ENERGY_NEEDED_FOR_MOVEMENT;
-    private static final int GENES_LENGTH = parameters.GENES_LENGTH;
+    private static final int ENERGY_NEEDED_FOR_MOVEMENT = PARAMETERS.ENERGY_NEEDED_FOR_MOVEMENT;
+    private static final int GENES_LENGTH = PARAMETERS.GENES_LENGTH;
 
     public Animal(Vector2d position, Genes genes, int energy){
         this.position = position;
+        this.previousPosition = position;
         this.genes = genes;
         this.energy = energy;
         this.kidsAmount = 0;
@@ -54,6 +56,7 @@ public class Animal implements WorldElement {
     }
 
     public void move(Boundary boundary) {
+        this.previousPosition = position;
         this.removeEnergy(ENERGY_NEEDED_FOR_MOVEMENT);
 
         int rotationNumber = this.genes.getGenesList().get(nextGene);
@@ -78,6 +81,10 @@ public class Animal implements WorldElement {
         }
     }
 
+    public void moveToPreviousPosition() {
+        position = previousPosition;
+    }
+
     public int getEnergy() {
         return energy;
     }
@@ -92,6 +99,10 @@ public class Animal implements WorldElement {
 
     public int getKidsAmount() {
         return kidsAmount;
+    }
+
+    public void addKid() {
+        kidsAmount++;
     }
 
     public Genes getGenes () {
