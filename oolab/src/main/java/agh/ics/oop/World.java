@@ -30,7 +30,7 @@ public class World {
     static int MAP_HEIGHT = parameters.MAP_HEIGHT;
     static int GRASS_START_AMOUNT = parameters.GRASS_START_AMOUNT;
     public static void run() throws FileNotFoundException {         //do zmiany po UI
-        Simulation simulation = new Simulation();
-        simulation.run();
+//        Simulation simulation = new Simulation(); ///////////
+//        simulation.run();
     }
 }

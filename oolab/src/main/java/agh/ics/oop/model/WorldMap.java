@@ -29,4 +29,6 @@ public interface WorldMap {
     Grass grassAt(Vector2d position);
 
     Boundary getBoundary();
+
+    WorldElement objectAt(Vector2d position);
 }

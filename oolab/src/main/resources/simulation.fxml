@@ -16,7 +16,7 @@
             <HBox>
                 <TextField fx:id="movesListTextField"/>
                 <Label fx:id="moveInfoLabel"/>
-            </HBox>x
+            </HBox>
             <Button fx:id="startSimulationButton" text="Start simulation" onAction="#onSimulationStartClicked"/>
             <Label fx:id="infoLabel" text="All animals will be living here!" textAlignment="CENTER"/>
             <GridPane fx:id="mapGrid" gridLinesVisible="true"/>
