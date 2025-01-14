@@ -155,6 +155,11 @@ public class GlobeMap implements WorldMap {
     }
 
     @Override
+    public WorldElement objectAt(Vector2d position) { /// //////////
+        return new Grass(new Vector2d(2,2)); ////////// do napisania
+    }
+
+    @Override
     public void placeAnimal(Animal animal) {
         ArrayList<Animal> animalList = animalsAt(animal.getPosition());
         animalList.add(animal);

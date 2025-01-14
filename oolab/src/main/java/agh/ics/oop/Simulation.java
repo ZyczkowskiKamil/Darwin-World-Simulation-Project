@@ -2,11 +2,17 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 import agh.ics.oop.model.util.MapVisualizer;
+import agh.ics.oop.presenter.SimulationPresenter;
 
 import java.io.FileNotFoundException;
 
 public class Simulation {
     private final static Parameters parameters;
+    private final SimulationPresenter presenter;
+
+    public Simulation(SimulationPresenter presenter) {
+        this.presenter = presenter;
+    }
 
     static {
         try {
@@ -25,7 +31,8 @@ public class Simulation {
     MapVisualizer mapVisualizer = new MapVisualizer(map);
     
     public void run() {     //do zmiany po UI
-        System.out.println(mapVisualizer.draw());
+//        System.out.println(mapVisualizer.draw());
+        presenter.drawMap();
 
         int simulationDay = 1;
 
@@ -37,7 +44,8 @@ public class Simulation {
             if (simulationDay % WATER_CHANGE_DAYS == 0) map.updateWater();
             map.placeGrasses(NUMBER_OF_GRASS_GROWING_DAILY);
             map.animalAging();
-            System.out.println(mapVisualizer.draw());
+            presenter.drawMap();
+//            System.out.println(mapVisualizer.draw());
             try {
                 Thread.sleep(MAP_REFRESH_TIME_MS);
             } catch (InterruptedException e) {
