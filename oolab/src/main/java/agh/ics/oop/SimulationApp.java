@@ -33,14 +33,13 @@ public class SimulationApp extends Application {
         BorderPane viewRoot = loader.load();
         SimulationPresenter presenter = loader.getController();
 
-
+        configureStage(primaryStage, viewRoot);
 
         presenter.setWorldMap(worldMap);
 
         Simulation simulation = new Simulation(presenter, worldMap);
-        simulation.run();
+        simulation.runAsync();
 
-        configureStage(primaryStage, viewRoot);
         primaryStage.show();
     }
 

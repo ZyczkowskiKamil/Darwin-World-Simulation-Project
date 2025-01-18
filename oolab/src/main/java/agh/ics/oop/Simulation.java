@@ -11,6 +11,7 @@ public class Simulation {
     private final SimulationPresenter presenter;
     private final GlobeMap map;
 
+    private Thread thread;
 
     public Simulation(SimulationPresenter presenter, GlobeMap worldMap) {
         this.presenter = presenter;
@@ -44,8 +45,7 @@ public class Simulation {
             if (simulationDay % WATER_CHANGE_DAYS == 0) map.updateWater();
             map.placeGrasses(NUMBER_OF_GRASS_GROWING_DAILY);
             map.animalAging();
-            presenter.drawMap();
-//            System.out.println(mapVisualizer.draw());
+            presenter.mapChanged(this.map, "Map changed");
             try {
                 Thread.sleep(MAP_REFRESH_TIME_MS);
             } catch (InterruptedException e) {
@@ -53,8 +53,23 @@ public class Simulation {
                 System.err.println("Simulation interrupted: " + e.getMessage());
             }
 
+            System.out.println(simulationDay);
             simulationDay++;
         }
+
+
+
         System.out.println("Simulation finished");
+    }
+
+    public void runAsync() {
+        thread = new Thread(() -> {
+            try {
+                run();
+            } catch (Exception exception) {
+            }
+        });
+        thread.start();
+
     }
 }
