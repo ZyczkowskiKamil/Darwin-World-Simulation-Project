@@ -15,7 +15,7 @@ public class World {
     }
 
     public static void main(String[] args) {
-        Application.launch(SimulationApp.class, args);
+        Application.launch(SimulationStartApp.class, args);
     }
 
     static Parameters parameters;

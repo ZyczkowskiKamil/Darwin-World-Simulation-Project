@@ -1,7 +1,5 @@
 package agh.ics.oop;
 
-import agh.ics.oop.model.GlobeMap;
-import agh.ics.oop.presenter.SimulationPresenter;
 import agh.ics.oop.presenter.SimulationStartPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
-public class SimulationApp extends Application {
+public class SimulationStartApp extends Application {
 
     static agh.ics.oop.model.Parameters parameters;
 
@@ -23,22 +21,15 @@ public class SimulationApp extends Application {
         }
     }
 
-    GlobeMap worldMap = new GlobeMap(parameters);
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("simulationStart.fxml"));
         BorderPane viewRoot = loader.load();
-        SimulationPresenter presenter = loader.getController();
+        SimulationStartPresenter presenter = loader.getController();
 
         configureStage(primaryStage, viewRoot);
-
-        presenter.setWorldMap(worldMap);
-
-        Simulation simulation = new Simulation(presenter, worldMap);
-        simulation.runAsync();
 
         primaryStage.show();
     }
