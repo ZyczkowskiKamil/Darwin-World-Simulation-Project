@@ -4,6 +4,17 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
+application {
+    getMainClass().set('agh.ics.oop.World')
+}
+
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
@@ -23,14 +34,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-application {
-    getMainClass().set('agh.ics.oop.World')
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
 }
