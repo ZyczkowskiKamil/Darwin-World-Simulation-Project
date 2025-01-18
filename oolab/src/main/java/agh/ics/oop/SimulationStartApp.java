@@ -2,16 +2,19 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.GlobeMap;
 import agh.ics.oop.presenter.SimulationPresenter;
-import agh.ics.oop.presenter.SimulationStartPresenter;
+//import agh.ics.oop.presenter.SimulationStartPresenter;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 
 public class SimulationStartApp extends Application {
+    public Button startSimulationButton;
 
     static agh.ics.oop.model.Parameters parameters;
 
@@ -42,5 +45,36 @@ public class SimulationStartApp extends Application {
         primaryStage.setTitle("Simulation app");
         primaryStage.minWidthProperty().bind(viewRoot.minWidthProperty());
         primaryStage.minHeightProperty().bind(viewRoot.minHeightProperty());
+    }
+
+    @FXML
+    public void onSimulationStartClicked() {
+        try {
+            // Load simulation.fxml
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+            BorderPane simulationRoot = loader.load();
+
+            // Get presenter and set up the simulation
+            SimulationPresenter simulationPresenter = loader.getController();
+            GlobeMap worldMap = new GlobeMap(parameters);
+            simulationPresenter.setWorldMap(worldMap);
+
+            // Create and start simulation
+            Simulation simulation = new Simulation(simulationPresenter, worldMap);
+
+            // Create new scene and show it
+            Stage stage = (Stage) startSimulationButton.getScene().getWindow();
+            Scene simulationScene = new Scene(simulationRoot);
+            stage.setScene(simulationScene);
+
+            // Start simulation after scene transition
+            simulation.runAsync();
+
+            simulationPresenter.drawMap(); // Initial map draw
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

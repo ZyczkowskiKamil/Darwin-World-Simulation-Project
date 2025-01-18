@@ -2,7 +2,7 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.*;
 import agh.ics.oop.presenter.SimulationPresenter;
-import agh.ics.oop.presenter.SimulationStartPresenter;
+//import agh.ics.oop.presenter.SimulationStartPresenter;
 
 import java.io.FileNotFoundException;
 
