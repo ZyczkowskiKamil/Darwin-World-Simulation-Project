@@ -9,7 +9,7 @@ import java.io.FileNotFoundException;
 public class Simulation {
     private final static Parameters parameters;
     private final SimulationPresenter presenter;
-    GlobeMap map;
+    private final GlobeMap map;
 
 
     public Simulation(SimulationPresenter presenter, GlobeMap worldMap) {
