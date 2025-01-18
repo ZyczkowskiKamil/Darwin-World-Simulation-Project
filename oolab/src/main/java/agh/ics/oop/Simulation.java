@@ -9,9 +9,12 @@ import java.io.FileNotFoundException;
 public class Simulation {
     private final static Parameters parameters;
     private final SimulationPresenter presenter;
+    GlobeMap map;
 
-    public Simulation(SimulationPresenter presenter) {
+
+    public Simulation(SimulationPresenter presenter, GlobeMap worldMap) {
         this.presenter = presenter;
+        this.map = worldMap;
     }
 
     static {
@@ -21,16 +24,13 @@ public class Simulation {
             throw new RuntimeException(e);
         }
     }
-
     private final static int NUMBER_OF_GRASS_GROWING_DAILY = parameters.NUMBER_OF_GRASS_GROWING_DAILY;
     private final static int MAP_REFRESH_TIME_MS = parameters.MAP_REFRESH_TIME_MS;
 
     private final static int WATER_CHANGE_DAYS = parameters.WATER_CHANGE_DAYS;
-
-    GlobeMap map = new GlobeMap(parameters);
-    MapVisualizer mapVisualizer = new MapVisualizer(map);
     
     public void run() {     //do zmiany po UI
+
 //        System.out.println(mapVisualizer.draw());
         presenter.drawMap();
 

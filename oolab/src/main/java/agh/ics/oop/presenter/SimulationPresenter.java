@@ -10,7 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
 
-public class SimulationPresenter { // implements MapChangeListener {
+public class SimulationPresenter {
+    public Button startSimulationButton; // implements MapChangeListener {
     private WorldMap worldMap;
     @FXML
     private GridPane mapGrid;
@@ -126,11 +127,12 @@ public class SimulationPresenter { // implements MapChangeListener {
 
     @FXML
     public void onSimulationStartClicked() {
+
         String movesString = movesListTextField.getText();
         try {
-            Simulation simulation = new Simulation(new SimulationPresenter()); //////////
-
-            simulation.run();
+//            Simulation simulation = new Simulation(new SimulationPresenter(), ); //////////
+//
+//            simulation.run();
 
 //             Platform.runLater(() -> startButton.setDisable(true));
 
