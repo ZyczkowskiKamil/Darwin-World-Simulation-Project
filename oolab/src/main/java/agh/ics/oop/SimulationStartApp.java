@@ -1,5 +1,7 @@
 package agh.ics.oop;
 
+import agh.ics.oop.model.GlobeMap;
+import agh.ics.oop.presenter.SimulationPresenter;
 import agh.ics.oop.presenter.SimulationStartPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,16 +23,16 @@ public class SimulationStartApp extends Application {
         }
     }
 
+    GlobeMap worldMap = new GlobeMap(parameters);
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("simulationStart.fxml"));
-        BorderPane viewRoot = loader.load();
-        SimulationStartPresenter presenter = loader.getController();
+        FXMLLoader loader1 = new FXMLLoader();
+        loader1.setLocation(getClass().getClassLoader().getResource("simulationStart.fxml"));
+        BorderPane viewRoot = loader1.load();
 
         configureStage(primaryStage, viewRoot);
-
         primaryStage.show();
     }
 

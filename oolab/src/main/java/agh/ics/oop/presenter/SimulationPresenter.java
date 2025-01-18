@@ -27,6 +27,8 @@ public class SimulationPresenter {
 
     public void setWorldMap(GlobeMap worldMap) {
         this.worldMap = worldMap;
+        clearGrid();
+        drawMap(); // Draw initial map state
     }
 
     private void clearGrid() {

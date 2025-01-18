@@ -45,35 +45,31 @@ public class SimulationStartPresenter {
     @FXML
     public void onSimulationStartClicked() {
         try {
-            Stage simulationStage = new Stage();
+            // Load simulation.fxml
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
+            BorderPane simulationRoot = loader.load();
 
-            // Load the FXML for SimulationApp
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("simulation.fxml"));
-            BorderPane viewRoot = loader.load();
-
-            // Set up the scene and stage
-            Scene simulationScene = new Scene(viewRoot);
-            simulationStage.setScene(simulationScene);
-            simulationStage.setTitle("Simulation App");
-
-            // Get the presenter from the SimulationApp
-            SimulationPresenter presenter = loader.getController();
-
-            // Set the world map in the presenter
+            // Get presenter and set up the simulation
+            SimulationPresenter simulationPresenter = loader.getController();
             GlobeMap worldMap = new GlobeMap(parameters);
-            presenter.setWorldMap(worldMap); // Assuming parameters are accessible
+            simulationPresenter.setWorldMap(worldMap);
 
-            // Show the new stage (window)
-            simulationStage.show();
+            // Create and start simulation
+            Simulation simulation = new Simulation(simulationPresenter, worldMap);
 
-            // Close the current stage (SimulationStartApp window)
-            Stage currentStage = (Stage) startSimulationButton.getScene().getWindow();
-            currentStage.close();
+            // Create new scene and show it
+            Stage stage = (Stage) startSimulationButton.getScene().getWindow();
+            Scene simulationScene = new Scene(simulationRoot);
+            stage.setScene(simulationScene);
 
-            Simulation simulation = new Simulation(presenter, worldMap);
+            // Start simulation after scene transition
             simulation.runAsync();
+
+            simulationPresenter.drawMap(); // Initial map draw
+
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }
