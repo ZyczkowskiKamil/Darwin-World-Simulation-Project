@@ -9,10 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 
 public class SimulationPresenter {
     public Button startSimulationButton; // implements MapChangeListener {
-    private WorldMap worldMap;
+    private GlobeMap worldMap;
     @FXML
     private GridPane mapGrid;
     @FXML
@@ -24,12 +25,14 @@ public class SimulationPresenter {
     @FXML
     private Button startButton;
 
-    public void setWorldMap(WorldMap worldMap) {
+    private long lastUpdateTime = System.currentTimeMillis();
+
+    public void setWorldMap(GlobeMap worldMap) {
         this.worldMap = worldMap;
     }
 
     private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().get(0)); // hack to retain visible grid lines
+        mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst()); // hack to retain visible grid lines
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
     }
@@ -81,7 +84,8 @@ public class SimulationPresenter {
         WorldElement element = worldMap.objectAt(position);
 
         if (worldMap.isWaterAt(position)) {
-            label = createLabel("W");
+            label = createLabel("■");
+            label.setTextFill(Color.BLUE);
         }
         else if (element != null) {
             label = createLabel(element.toString());
@@ -113,24 +117,11 @@ public class SimulationPresenter {
         infoLabel.setText("");
     }
 
-    private Label createLabelForElement(WorldElement element) {
-        Label label;
-        if (element != null) {
-            label = new Label(element.toString());
-        } else {
-            label = new Label(" ");
-        }
-        label.setMinWidth(50);
-        label.setMinHeight(50);
-        label.setAlignment(Pos.CENTER);
-        return label;
-    }
-
 //    @Override
-    public void mapChanged(WorldMap worldMap, String message) {
+    public void mapChanged(String message) {
         Platform.runLater(() -> {
             clearGrid();
-            this.drawMap();
+            drawMap();
             moveInfoLabel.setText(message);
         });
     }
@@ -140,11 +131,8 @@ public class SimulationPresenter {
 
         String movesString = movesListTextField.getText();
         try {
-//            Simulation simulation = new Simulation(new SimulationPresenter(), ); //////////
-//
-//            simulation.run();
-
-//             Platform.runLater(() -> startButton.setDisable(true));
+            Simulation simulation = new Simulation(this, worldMap);
+            simulation.runAsync();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

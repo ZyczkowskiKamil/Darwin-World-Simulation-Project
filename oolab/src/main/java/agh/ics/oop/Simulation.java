@@ -45,7 +45,7 @@ public class Simulation {
             if (simulationDay % WATER_CHANGE_DAYS == 0) map.updateWater();
             map.placeGrasses(NUMBER_OF_GRASS_GROWING_DAILY);
             map.animalAging();
-            presenter.mapChanged(this.map, "Map changed");
+            presenter.mapChanged("Map changed");
             try {
                 Thread.sleep(MAP_REFRESH_TIME_MS);
             } catch (InterruptedException e) {
