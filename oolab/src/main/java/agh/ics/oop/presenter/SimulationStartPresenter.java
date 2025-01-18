@@ -1,7 +1,7 @@
 package agh.ics.oop.presenter;
 
 import agh.ics.oop.Simulation;
-import agh.ics.oop.SimulationApp;
+//import agh.ics.oop.SimulationApp;
 import agh.ics.oop.SimulationStartApp;
 import agh.ics.oop.model.*;
 import javafx.application.Application;

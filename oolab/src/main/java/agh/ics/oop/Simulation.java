@@ -32,9 +32,6 @@ public class Simulation {
     
     public void run() {     //do zmiany po UI
 
-//        System.out.println(mapVisualizer.draw());
-        presenter.drawMap();
-
         int simulationDay = 1;
 
         while(map.numberOfAnimalsAlive() > 0) {
@@ -49,7 +46,7 @@ public class Simulation {
             try {
                 Thread.sleep(MAP_REFRESH_TIME_MS);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();  // Restore the interrupted status
+                Thread.currentThread().interrupt();
                 System.err.println("Simulation interrupted: " + e.getMessage());
             }
 
