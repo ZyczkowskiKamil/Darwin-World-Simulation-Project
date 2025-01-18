@@ -77,8 +77,18 @@ public class SimulationPresenter {
     }
 
     private void addGridCell(Vector2d position, int col, int row) {
+        Label label;
         WorldElement element = worldMap.objectAt(position);
-        Label label = createLabelForElement(element);
+
+        if (worldMap.isWaterAt(position)) {
+            label = createLabel("W");
+        }
+        else if (element != null) {
+            label = createLabel(element.toString());
+        }
+        else {
+            label = createLabel(" ");
+        }
         mapGrid.add(label, col, row);
     }
 

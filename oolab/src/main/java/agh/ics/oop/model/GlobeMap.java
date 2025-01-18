@@ -155,8 +155,10 @@ public class GlobeMap implements WorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) { /// //////////
-        return new Grass(new Vector2d(2,2)); ////////// do napisania
+    public WorldElement objectAt(Vector2d position) {
+        if (animals.containsKey(position)) return animals.get(position).getFirst();
+        if (grasses.containsKey(position)) return grasses.get(position);
+        return null;
     }
 
     @Override
