@@ -2,12 +2,12 @@ package agh.ics.oop;
 
 import agh.ics.oop.model.GlobeMap;
 import agh.ics.oop.presenter.SimulationPresenter;
-//import agh.ics.oop.presenter.SimulationStartPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -26,7 +26,89 @@ public class SimulationStartApp extends Application {
         }
     }
 
-    GlobeMap worldMap = new GlobeMap(parameters);
+    @FXML
+    private TextField mapRefreshTimeMsField;
+    @FXML
+    private TextField mapHeightField;
+    @FXML
+    private TextField mapWidthField;
+    @FXML
+    private TextField grassStartAmountField;
+    @FXML
+    private TextField energyAddedAfterEatingGrassField;
+    @FXML
+    private TextField numberOfGrassGrowingDailyField;
+    @FXML
+    private TextField startAnimalNumberField;
+    @FXML
+    private TextField startAnimalEnergyField;
+    @FXML
+    private TextField breedingReadyAnimalEnergyField;
+    @FXML
+    private TextField energyLostInReproductionField;
+    @FXML
+    private TextField minMutationNumberField;
+    @FXML
+    private TextField maxMutationNumberField;
+    @FXML
+    private TextField genesLengthField;
+    @FXML
+    private TextField agingAnimalsField;
+    @FXML
+    private TextField energyNeededForMovementField;
+    @FXML
+    private TextField waterAreasNumberField;
+    @FXML
+    private TextField waterAreasMinSizeField;
+    @FXML
+    private TextField waterAreasMaxSizeField;
+    @FXML
+    private TextField waterChangeDaysField;
+
+    @FXML
+    public void initialize() {
+        mapRefreshTimeMsField.setText(String.valueOf(parameters.MAP_REFRESH_TIME_MS));
+        mapHeightField.setText(String.valueOf(parameters.MAP_HEIGHT));
+        mapWidthField.setText(String.valueOf(parameters.MAP_WIDTH));
+        grassStartAmountField.setText(String.valueOf(parameters.GRASS_START_AMOUNT));
+        energyAddedAfterEatingGrassField.setText(String.valueOf(parameters.ENERGY_ADDED_AFTER_EATING_GRASS));
+        numberOfGrassGrowingDailyField.setText(String.valueOf(parameters.NUMBER_OF_GRASS_GROWING_DAILY));
+        startAnimalNumberField.setText(String.valueOf(parameters.START_ANIMAL_NUMBER));
+        startAnimalEnergyField.setText(String.valueOf(parameters.START_ANIMAL_ENERGY));
+        breedingReadyAnimalEnergyField.setText(String.valueOf(parameters.BREEDING_READY_ANIMAL_ENERGY));
+        energyLostInReproductionField.setText(String.valueOf(parameters.ENERGY_LOST_IN_REPRODUCTION));
+        minMutationNumberField.setText(String.valueOf(parameters.MIN_MUTATION_NUMBER));
+        maxMutationNumberField.setText(String.valueOf(parameters.MAX_MUTATION_NUMBER));
+        genesLengthField.setText(String.valueOf(parameters.GENES_LENGTH));
+        agingAnimalsField.setText(String.valueOf(parameters.AGING_ANIMALS));
+        energyNeededForMovementField.setText(String.valueOf(parameters.ENERGY_NEEDED_FOR_MOVEMENT));
+        waterAreasNumberField.setText(String.valueOf(parameters.WATER_AREAS_NUMBER));
+        waterAreasMinSizeField.setText(String.valueOf(parameters.WATER_AREAS_MIN_SIZE));
+        waterAreasMaxSizeField.setText(String.valueOf(parameters.WATER_AREAS_MAX_SIZE));
+        waterChangeDaysField.setText(String.valueOf(parameters.WATER_CHANGE_DAYS));
+    }
+
+    public void setParameters() {
+        parameters.MAP_REFRESH_TIME_MS = Integer.parseInt(mapRefreshTimeMsField.getText());
+        parameters.MAP_HEIGHT = Integer.parseInt(mapHeightField.getText());
+        parameters.MAP_WIDTH = Integer.parseInt(mapWidthField.getText());
+        parameters.GRASS_START_AMOUNT = Integer.parseInt(grassStartAmountField.getText());
+        parameters.ENERGY_ADDED_AFTER_EATING_GRASS = Integer.parseInt(energyAddedAfterEatingGrassField.getText());
+        parameters.NUMBER_OF_GRASS_GROWING_DAILY = Integer.parseInt(numberOfGrassGrowingDailyField.getText());
+        parameters.START_ANIMAL_NUMBER = Integer.parseInt(startAnimalNumberField.getText());
+        parameters.START_ANIMAL_ENERGY = Integer.parseInt(startAnimalEnergyField.getText());
+        parameters.BREEDING_READY_ANIMAL_ENERGY = Integer.parseInt(breedingReadyAnimalEnergyField.getText());
+        parameters.ENERGY_LOST_IN_REPRODUCTION = Integer.parseInt(energyLostInReproductionField.getText());
+        parameters.MIN_MUTATION_NUMBER = Integer.parseInt(minMutationNumberField.getText());
+        parameters.MAX_MUTATION_NUMBER = Integer.parseInt(maxMutationNumberField.getText());
+        parameters.GENES_LENGTH = Integer.parseInt(genesLengthField.getText());
+        parameters.AGING_ANIMALS = agingAnimalsField.getText().equals("true");
+        parameters.ENERGY_NEEDED_FOR_MOVEMENT = Integer.parseInt(energyNeededForMovementField.getText());
+        parameters.WATER_AREAS_NUMBER = Integer.parseInt(waterAreasNumberField.getText());
+        parameters.WATER_AREAS_MIN_SIZE = Integer.parseInt(waterAreasMinSizeField.getText());
+        parameters.WATER_AREAS_MAX_SIZE = Integer.parseInt(waterAreasMaxSizeField.getText());
+        parameters.WATER_CHANGE_DAYS = Integer.parseInt(waterChangeDaysField.getText());
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -50,6 +132,9 @@ public class SimulationStartApp extends Application {
     @FXML
     public void onSimulationStartClicked() {
         try {
+            setParameters();
+            parameters.saveToFile("parameters.txt");
+
             // Load simulation.fxml
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));

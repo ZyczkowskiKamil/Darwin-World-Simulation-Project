@@ -124,15 +124,4 @@ public class SimulationPresenter {
             moveInfoLabel.setText(message);
         });
     }
-
-    @FXML
-    public void onSimulationStartClicked() {
-        try {
-            Simulation simulation = new Simulation(this, worldMap);
-            simulation.runAsync();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

@@ -1,7 +1,9 @@
 package agh.ics.oop.model;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Parameters {
@@ -112,6 +114,38 @@ public class Parameters {
             scanner.close();
         }
         catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveToFile(String filename) {
+        try {
+            File file = Paths.get("src/main/resources/parameters/" + filename).toFile();
+
+            try (PrintWriter writer = new PrintWriter(file)) {
+                writer.println("MAP_REFRESH_TIME_MS=" + MAP_REFRESH_TIME_MS);
+                writer.println("MAP_HEIGHT=" + MAP_HEIGHT);
+                writer.println("MAP_WIDTH=" + MAP_WIDTH);
+                writer.println("GRASS_START_AMOUNT=" + GRASS_START_AMOUNT);
+                writer.println("ENERGY_ADDED_AFTER_EATING_GRASS=" + ENERGY_ADDED_AFTER_EATING_GRASS);
+                writer.println("NUMBER_OF_GRASS_GROWING_DAILY=" + NUMBER_OF_GRASS_GROWING_DAILY);
+                writer.println("START_ANIMAL_NUMBER=" + START_ANIMAL_NUMBER);
+                writer.println("START_ANIMAL_ENERGY=" + START_ANIMAL_ENERGY);
+                writer.println("BREEDING_READY_ANIMAL_ENERGY=" + BREEDING_READY_ANIMAL_ENERGY);
+                writer.println("ENERGY_LOST_IN_REPRODUCTION=" + ENERGY_LOST_IN_REPRODUCTION);
+                writer.println("MIN_MUTATION_NUMBER=" + MIN_MUTATION_NUMBER);
+                writer.println("MAX_MUTATION_NUMBER=" + MAX_MUTATION_NUMBER);
+                writer.println("GENES_LENGTH=" + GENES_LENGTH);
+                writer.println("AGING_ANIMALS=" + AGING_ANIMALS);
+                writer.println("ENERGY_NEEDED_FOR_MOVEMENT=" + ENERGY_NEEDED_FOR_MOVEMENT);
+                writer.println("WATER_AREAS_NUMBER=" + WATER_AREAS_NUMBER);
+                writer.println("WATER_AREAS_MIN_SIZE=" + WATER_AREAS_MIN_SIZE);
+                writer.println("WATER_AREAS_MAX_SIZE=" + WATER_AREAS_MAX_SIZE);
+                writer.println("WATER_CHANGE_DAYS=" + WATER_CHANGE_DAYS);
+            }
+
+            System.out.println("Parameters saved successfully to " + file.getAbsolutePath());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
