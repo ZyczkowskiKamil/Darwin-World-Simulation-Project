@@ -156,7 +156,8 @@ public class GlobeMap implements WorldMap {
 
     @Override
     public WorldElement objectAt(Vector2d position) {
-        if (animals.containsKey(position)) return animals.get(position).getFirst();
+        if (animals.containsKey(position))
+            return findWinningAnimal(position);
         if (grasses.containsKey(position)) return grasses.get(position);
         return null;
     }

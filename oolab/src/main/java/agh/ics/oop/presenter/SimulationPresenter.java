@@ -25,8 +25,6 @@ public class SimulationPresenter {
     @FXML
     private Button startButton;
 
-    private long lastUpdateTime = System.currentTimeMillis();
-
     public void setWorldMap(GlobeMap worldMap) {
         this.worldMap = worldMap;
     }
@@ -128,8 +126,6 @@ public class SimulationPresenter {
 
     @FXML
     public void onSimulationStartClicked() {
-
-        String movesString = movesListTextField.getText();
         try {
             Simulation simulation = new Simulation(this, worldMap);
             simulation.runAsync();
