@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="550.0" minWidth="850.0"
+            minHeight="800.0" minWidth="850.0"
             fx:controller="agh.ics.oop.SimulationStartApp">
     <center>
         <VBox spacing="10" alignment="CENTER">
@@ -72,7 +72,18 @@
 
                 <Label text="WATER_CHANGE_DAYS:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
                 <TextField fx:id="waterChangeDaysField" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
+
             </GridPane>
+
+            <Label text="Parameters file name:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <TextField fx:id="parametersFileName" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
+
+            <Label text="Get parameters from file" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <Button fx:id="getParametersFromFileButton" text="Get parameters from file" onAction="#onParametersGetButtonClicked"/>
+            <Label text="Save parameters to file:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <Button fx:id="saveParametersToFileButton" text="Save parameters to file" onAction="#onParametersSaveButtonClicked"/>
+            <Label text="Message:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <TextField fx:id="userFileButtonMessage" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
         </VBox>
     </center>
 </BorderPane>

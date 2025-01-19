@@ -4,6 +4,7 @@ import agh.ics.oop.model.GlobeMap;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,10 +13,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.nio.channels.FileChannel;
 
 public class SimulationStartApp extends Application {
+    @FXML
     public Button startSimulationButton;
+    @FXML
+    public Button getParametersFromFileButton;
+    @FXML
+    public Button saveParametersToFileButton;
 
     static agh.ics.oop.model.Parameters parameters;
 
@@ -65,6 +72,10 @@ public class SimulationStartApp extends Application {
     private TextField waterAreasMaxSizeField;
     @FXML
     private TextField waterChangeDaysField;
+    @FXML
+    private TextField parametersFileName;
+    @FXML
+    private TextField userFileButtonMessage;
 
     @FXML
     public void initialize() {
@@ -87,6 +98,7 @@ public class SimulationStartApp extends Application {
         waterAreasMinSizeField.setText(String.valueOf(parameters.WATER_AREAS_MIN_SIZE));
         waterAreasMaxSizeField.setText(String.valueOf(parameters.WATER_AREAS_MAX_SIZE));
         waterChangeDaysField.setText(String.valueOf(parameters.WATER_CHANGE_DAYS));
+        parametersFileName.setText("parameters.txt");
     }
 
     public void setParameters() {
@@ -172,5 +184,58 @@ public class SimulationStartApp extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void copyFileToFile(final File src, final File dest) throws IOException
+    {
+        copyInputStreamToFile(new FileInputStream(src), dest);
+        dest.setLastModified(src.lastModified());
+    }
+
+    public static void copyInputStreamToFile(final InputStream in, final File dest)
+            throws IOException
+    {
+        copyInputStreamToOutputStream(in, new FileOutputStream(dest));
+    }
+
+
+    public static void copyInputStreamToOutputStream(final InputStream in,
+                                                     final OutputStream out) throws IOException
+    {
+        try
+        {
+            try
+            {
+                final byte[] buffer = new byte[1024];
+                int n;
+                while ((n = in.read(buffer)) != -1)
+                    out.write(buffer, 0, n);
+            }
+            finally
+            {
+                out.close();
+            }
+        }
+        finally
+        {
+            in.close();
+        }
+    }
+
+    public void onParametersGetButtonClicked() throws InterruptedException, IOException {
+        String filename = parametersFileName.getText();
+
+        parameters.getFromFile(filename);
+
+        Thread.sleep(1000);
+
+        initialize();
+    }
+
+    public void onParametersSaveButtonClicked() {
+        String filename = parametersFileName.getText();
+        setParameters();
+        parameters.saveToFile(filename);
+        userFileButtonMessage.setText("Saved to file successfully");
     }
 }

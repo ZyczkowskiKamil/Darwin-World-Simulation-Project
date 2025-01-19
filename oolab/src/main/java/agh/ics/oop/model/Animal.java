@@ -5,10 +5,10 @@ import java.util.Random;
 
 public class Animal implements WorldElement {
 
-    private final static Parameters PARAMETERS;
+    private final static Parameters parameters;
     static {
         try {
-            PARAMETERS = new Parameters();
+            parameters = new Parameters();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -25,9 +25,9 @@ public class Animal implements WorldElement {
     private int energy;
     private double moveSkipProbability;
 
-    private static final int ENERGY_NEEDED_FOR_MOVEMENT = PARAMETERS.ENERGY_NEEDED_FOR_MOVEMENT;
-    private static final int GENES_LENGTH = PARAMETERS.GENES_LENGTH;
-    private static final boolean AGING_ANIMALS = PARAMETERS.AGING_ANIMALS;
+    private static final int ENERGY_NEEDED_FOR_MOVEMENT = parameters.ENERGY_NEEDED_FOR_MOVEMENT;
+    private static final int GENES_LENGTH = parameters.GENES_LENGTH;
+    private static final boolean AGING_ANIMALS = parameters.AGING_ANIMALS;
 
     public Animal(Vector2d position, Genes genes, int energy){
         this.position = position;
