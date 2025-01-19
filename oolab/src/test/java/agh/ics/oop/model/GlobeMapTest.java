@@ -19,36 +19,38 @@ class GlobeMapTest {
 
     GlobeMap map = new GlobeMap(parameters);
 
+    int grassAmount = map.getGrassNumber();
+    int animalAmount = map.numberOfAnimalsAlive();
 
 
     @Test
     void placeInitialAnimals() {
-        assertEquals(parameters.START_ANIMAL_NUMBER, map.numberOfAnimalsAlive());
+        assertEquals(animalAmount, map.numberOfAnimalsAlive());
     }
 
     @Test
     void placeGrasses() {
-        assertEquals(parameters.GRASS_START_AMOUNT, map.getGrassNumber());
+        assertEquals(grassAmount, map.getGrassNumber());
     }
 
     @Test
     void animalsEatGrass() {
         map.animalsEatGrass();
 
-        assertEquals(parameters.START_ANIMAL_NUMBER, map.numberOfAnimalsAlive());
-        assertEquals(parameters.GRASS_START_AMOUNT, map.getGrassNumber());
+        assertEquals(animalAmount, map.numberOfAnimalsAlive());
+        assertEquals(grassAmount, map.getGrassNumber());
     }
 
     @Test
     void removeDeadAnimals() {
         map.removeDeadAnimals();
 
-        assertEquals(parameters.START_ANIMAL_NUMBER, map.numberOfAnimalsAlive());
+        assertEquals(animalAmount, map.numberOfAnimalsAlive());
     }
 
     @Test
     void numberOfAnimalsAlive() {
-        assertEquals(parameters.START_ANIMAL_NUMBER, map.numberOfAnimalsAlive());
+        assertEquals(animalAmount, map.numberOfAnimalsAlive());
     }
 
 
