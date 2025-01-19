@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+
+import static java.util.Collections.min;
 
 public class SimulationPresenter {
     private GlobeMap worldMap;
@@ -23,7 +26,8 @@ public class SimulationPresenter {
     }
 
     private void clearGrid() {
-        mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst()); // hack to retain visible grid lines
+        if(!mapGrid.getChildren().isEmpty())
+            mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst()); // hack to retain visible grid lines
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
     }
@@ -39,7 +43,7 @@ public class SimulationPresenter {
         int maxX = boundary.TOP_RIGHT().getX();
 
         for (int x = minX; x <= maxX; x++) {
-            Label label = createLabel(String.valueOf(x));
+            Label label = createLabel(String.valueOf(""));
             mapGrid.add(label, x - minX + 1, 0);
         }
     }
@@ -49,7 +53,7 @@ public class SimulationPresenter {
         int maxY = boundary.TOP_RIGHT().getY();
 
         for (int y = minY; y <= maxY; y++) {
-            Label label = createLabel(String.valueOf(y));
+            Label label = createLabel(String.valueOf(""));
             mapGrid.add(label, 0, maxY - y + 1);
         }
     }
@@ -70,54 +74,92 @@ public class SimulationPresenter {
         }
     }
 
+
+
     private void addGridCell(Vector2d position, int col, int row) {
-        Label label;
+        Pane pane = new Pane();
         WorldElement element = worldMap.objectAt(position);
 
         if (worldMap.isWaterAt(position)) {
-            label = createLabel("■");
-            label.setTextFill(Color.BLUE);
-            label.autosize();
+            pane.setStyle("-fx-background-color: BLUE;");
+//            label.setTextFill(Color.BLUE);
+//            label.autosize();
         }
         else if (element != null) {
             if (element.toString().equals("A")) {
-                label = createLabel("■");
-
                 Animal animal = (Animal) element;
                 int energyLevel = animal.energyLevelColour();
                 if(energyLevel == 0){
-                    label.setTextFill(Color.YELLOW);
+                    pane.setStyle("-fx-background-color: YELLOW;");
                 }
                 else if(energyLevel == 1){
-                    label.setTextFill(Color.ORANGE);
+                    pane.setStyle("-fx-background-color: ORANGE;");
                 }
                 else {
-                    label.setTextFill(Color.RED);
+                    pane.setStyle("-fx-background-color: RED;");
                 }
-                label.autosize();
             }
             else {
-                label = createLabel("■");
-                label.setTextFill(Color.GREEN);
-                label.autosize();
+                pane.setStyle("-fx-background-color: DARKGREEN;");
             }
         }
         else {
-            label = createLabel(" ");
+            pane.setStyle("-fx-background-color: LIGHTGREEN;");
         }
-        mapGrid.add(label, col, row);
+        mapGrid.add(pane, col, row);
     }
+
+
+//    private void addGridCell(Vector2d position, int col, int row) {
+//        Label label;
+//        WorldElement element = worldMap.objectAt(position);
+//
+//        if (worldMap.isWaterAt(position)) {
+//            label = createLabel("■");
+//            label.setTextFill(Color.BLUE);
+//            label.autosize();
+//        }
+//        else if (element != null) {
+//            if (element.toString().equals("A")) {
+//                label = createLabel("■");
+//
+//                Animal animal = (Animal) element;
+//                int energyLevel = animal.energyLevelColour();
+//                if(energyLevel == 0){
+//                    label.setTextFill(Color.YELLOW);
+//                }
+//                else if(energyLevel == 1){
+//                    label.setTextFill(Color.ORANGE);
+//                }
+//                else {
+//                    label.setTextFill(Color.RED);
+//                }
+//                label.autosize();
+//            }
+//            else {
+//                label = createLabel("■");
+//                label.setTextFill(Color.GREEN);
+//                label.autosize();
+//            }
+//        }
+//        else {
+//            label = createLabel(" ");
+//        }
+//        mapGrid.add(label, col, row);
+//    }
 
     private Label createLabel(String text) {
         Label label = new Label(text);
-        label.setMinWidth(50);
-        label.setMinHeight(50);
+        Boundary boundary = worldMap.getBoundary();
+        int scale = Math.max(boundary.TOP_RIGHT().getX(), boundary.TOP_RIGHT().getY());
+        label.setMinWidth(Math.ceil((double) 500 / scale));
+        label.setMinHeight(Math.ceil((double) 500 / scale));
         label.setAlignment(Pos.CENTER);
         return label;
     }
 
     private void placeCenterIndicator() {
-        Label centerLabel = createLabel("x/y");
+        Label centerLabel = createLabel("");
         mapGrid.add(centerLabel, 0, 0);
     }
 

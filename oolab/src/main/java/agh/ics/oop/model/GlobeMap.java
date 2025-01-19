@@ -15,11 +15,16 @@ public class GlobeMap implements WorldMap {
     private final int energyLostInReproduction;
     private final int waterAreasMinSize;
     private final int waterAreasMaxSize;
+    private final int mapHeight;
+    private final int mapWidth;
+
+    int deadAnimalNumber = 0;
+    int deadAnimalAgeSum = 0;
 
 
     public GlobeMap(Parameters parameters) {
-        int mapHeight = parameters.MAP_HEIGHT;
-        int mapWidth = parameters.MAP_WIDTH;
+        this.mapHeight = parameters.MAP_HEIGHT;
+        this.mapWidth = parameters.MAP_WIDTH;
         int startAnimalNumber = parameters.START_ANIMAL_NUMBER;
         int startAnimalEnergy = parameters.START_ANIMAL_ENERGY;
         int grassStartAmount = parameters.GRASS_START_AMOUNT;
@@ -174,6 +179,8 @@ public class GlobeMap implements WorldMap {
         ArrayList<Animal> animalList = animalsAt(animal.getPosition());
         animalList.remove(animal);
         animals.put(animal.getPosition(), animalList);
+        deadAnimalAgeSum += animal.getAge();
+        deadAnimalNumber ++;
     }
 
     @Override
@@ -318,4 +325,57 @@ public class GlobeMap implements WorldMap {
             }
         }
     }
+
+    public int getAnimalNumber() {
+        int animalNumber = 0;
+        for(ArrayList<Animal> animalList : animals.values()) {
+            animalNumber += animalList.size();
+        }
+        return animalNumber;
+    }
+
+    public int getGrassNumber() {
+        return grasses.keySet().size();
+    }
+
+    public int getWaterNumber() {
+        return waterPlaces.size();
+    }
+
+    public int getFreePlacesNumber() {
+        return mapHeight * mapWidth - getWaterNumber() - getGrassNumber() - getAnimalNumber();
+    }
+
+    public double getAverageAnimalEnergy() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+        int energySum = 0;
+
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = new ArrayList<>(animalsAt(position));
+            for (Animal animal : animalList) {
+                energySum += animal.getEnergy();
+            }
+        }
+        return Math.round((double) energySum / getAnimalNumber() * 100.0) / 100.0;
+    }
+
+    public double getAverageDeadAnimalAge() {
+        if(deadAnimalNumber == 0)
+            return 0;
+        return Math.round((double) deadAnimalAgeSum / deadAnimalNumber * 100.0) / 100.0;
+    }
+
+    public double getAverageKidsAmount() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+        int kidSum = 0;
+
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = new ArrayList<>(animalsAt(position));
+            for (Animal animal : animalList) {
+                kidSum += animal.getKidsAmount();
+            }
+        }
+        return Math.round((double) kidSum / getAnimalNumber() * 100.0) / 100.0;
+    }
+
 }
