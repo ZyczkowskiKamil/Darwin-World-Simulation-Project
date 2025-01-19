@@ -144,6 +144,8 @@ public class SimulationStartApp extends Application {
             setParameters();
             parameters.saveToFile("parameters.txt");
 
+            Thread.sleep(1000);
+
             // Load simulation.fxml
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getClassLoader().getResource("simulation.fxml"));
