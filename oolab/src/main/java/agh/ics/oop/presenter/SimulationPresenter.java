@@ -1,29 +1,21 @@
 package agh.ics.oop.presenter;
 
-import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 
 public class SimulationPresenter {
-    public Button startSimulationButton; // implements MapChangeListener {
     private GlobeMap worldMap;
     @FXML
     private GridPane mapGrid;
     @FXML
     private Label infoLabel;
     @FXML
-    private TextField movesListTextField;
-    @FXML
     private Label moveInfoLabel;
-    @FXML
-    private Button startButton;
 
     public void setWorldMap(GlobeMap worldMap) {
         this.worldMap = worldMap;
@@ -85,9 +77,30 @@ public class SimulationPresenter {
         if (worldMap.isWaterAt(position)) {
             label = createLabel("■");
             label.setTextFill(Color.BLUE);
+            label.autosize();
         }
         else if (element != null) {
-            label = createLabel(element.toString());
+            if (element.toString().equals("A")) {
+                label = createLabel("■");
+
+                Animal animal = (Animal) element;
+                int energyLevel = animal.energyLevelColour();
+                if(energyLevel == 0){
+                    label.setTextFill(Color.YELLOW);
+                }
+                else if(energyLevel == 1){
+                    label.setTextFill(Color.ORANGE);
+                }
+                else {
+                    label.setTextFill(Color.RED);
+                }
+                label.autosize();
+            }
+            else {
+                label = createLabel("■");
+                label.setTextFill(Color.GREEN);
+                label.autosize();
+            }
         }
         else {
             label = createLabel(" ");

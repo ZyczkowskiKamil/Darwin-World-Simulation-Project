@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Parameters {
-    //prowizoryczna wersja, dopóki nie ma interfejsu graficznego
 
     public int MAP_REFRESH_TIME_MS;
     public int MAP_HEIGHT;

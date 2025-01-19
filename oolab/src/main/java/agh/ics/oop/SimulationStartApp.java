@@ -3,6 +3,7 @@ package agh.ics.oop;
 import agh.ics.oop.model.GlobeMap;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -90,6 +91,7 @@ public class SimulationStartApp extends Application {
 
     public void setParameters() {
         parameters.MAP_REFRESH_TIME_MS = Integer.parseInt(mapRefreshTimeMsField.getText());
+        System.out.println("MAP_REFRESH_TIME_MS: " + parameters.MAP_REFRESH_TIME_MS); //
         parameters.MAP_HEIGHT = Integer.parseInt(mapHeightField.getText());
         parameters.MAP_WIDTH = Integer.parseInt(mapWidthField.getText());
         parameters.GRASS_START_AMOUNT = Integer.parseInt(grassStartAmountField.getText());
@@ -118,6 +120,13 @@ public class SimulationStartApp extends Application {
         BorderPane viewRoot = loader1.load();
 
         configureStage(primaryStage, viewRoot);
+
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Application is closing...");
+            Platform.exit();
+            System.exit(0);
+        });
+
         primaryStage.show();
     }
 
@@ -146,7 +155,7 @@ public class SimulationStartApp extends Application {
             simulationPresenter.setWorldMap(worldMap);
 
             // Create and start simulation
-            Simulation simulation = new Simulation(simulationPresenter, worldMap);
+            Simulation simulation = new Simulation(simulationPresenter, worldMap, parameters);
 
             // Create new scene and show it
             Stage stage = (Stage) startSimulationButton.getScene().getWindow();
