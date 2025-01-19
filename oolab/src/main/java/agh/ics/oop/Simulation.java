@@ -36,7 +36,7 @@ public class Simulation {
             map.placeGrasses(NUMBER_OF_GRASS_GROWING_DAILY);
             map.animalAging();
             presenter.mapChanged("Day: " + simulationDay + " "
-                    + "Animals: " + map.getAnimalNumber() + " "
+                    + "Animals: " + map.numberOfAnimalsAlive() + " "
                     + "Grasses: " + map.getGrassNumber() + " "
                     + "Free places: " + map.getFreePlacesNumber() + " "
                     + "Average energy: " + map.getAverageAnimalEnergy() + " "

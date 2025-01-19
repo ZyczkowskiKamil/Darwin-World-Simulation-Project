@@ -276,7 +276,7 @@ public class GlobeMap implements WorldMap {
     public int numberOfAnimalsAlive() {
         int count = 0;
         for (ArrayList<Animal> animalList : animals.values()) {
-            count += animalList.size();  // Sum the size of each list of animals
+            count += animalList.size();
         }
         return count;
     }
@@ -326,14 +326,6 @@ public class GlobeMap implements WorldMap {
         }
     }
 
-    public int getAnimalNumber() {
-        int animalNumber = 0;
-        for(ArrayList<Animal> animalList : animals.values()) {
-            animalNumber += animalList.size();
-        }
-        return animalNumber;
-    }
-
     public int getGrassNumber() {
         return grasses.keySet().size();
     }
@@ -343,7 +335,7 @@ public class GlobeMap implements WorldMap {
     }
 
     public int getFreePlacesNumber() {
-        return mapHeight * mapWidth - getWaterNumber() - getGrassNumber() - getAnimalNumber();
+        return mapHeight * mapWidth - getWaterNumber() - getGrassNumber() - numberOfAnimalsAlive();
     }
 
     public double getAverageAnimalEnergy() {
@@ -356,7 +348,7 @@ public class GlobeMap implements WorldMap {
                 energySum += animal.getEnergy();
             }
         }
-        return Math.round((double) energySum / getAnimalNumber() * 100.0) / 100.0;
+        return Math.round((double) energySum / numberOfAnimalsAlive() * 100.0) / 100.0;
     }
 
     public double getAverageDeadAnimalAge() {
@@ -375,7 +367,7 @@ public class GlobeMap implements WorldMap {
                 kidSum += animal.getKidsAmount();
             }
         }
-        return Math.round((double) kidSum / getAnimalNumber() * 100.0) / 100.0;
+        return Math.round((double) kidSum / numberOfAnimalsAlive() * 100.0) / 100.0;
     }
 
 }
