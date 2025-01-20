@@ -8,6 +8,8 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 import static java.util.Collections.min;
 
@@ -85,26 +87,32 @@ public class SimulationPresenter {
 //            label.setTextFill(Color.BLUE);
 //            label.autosize();
         }
-        else if (element != null) {
-            if (element.toString().equals("A")) {
-                Animal animal = (Animal) element;
-                int energyLevel = animal.energyLevelColour();
-                if(energyLevel == 0){
-                    pane.setStyle("-fx-background-color: YELLOW;");
-                }
-                else if(energyLevel == 1){
-                    pane.setStyle("-fx-background-color: ORANGE;");
-                }
-                else {
-                    pane.setStyle("-fx-background-color: RED;");
-                }
-            }
-            else {
-                pane.setStyle("-fx-background-color: DARKGREEN;");
-            }
-        }
         else {
             pane.setStyle("-fx-background-color: LIGHTGREEN;");
+            if (element != null) {
+                Circle circle = new Circle();
+                Boundary boundary = worldMap.getBoundary();
+                int scale = Math.max(boundary.TOP_RIGHT().getX(), boundary.TOP_RIGHT().getY());
+                double size = Math.ceil((double) 500 / scale);
+
+                circle.setCenterX(size/2);
+                circle.setCenterY(size/2);
+                circle.setRadius(size/2);
+                if (element.toString().equals("A")) {
+                    Animal animal = (Animal) element;
+                    int energyLevel = animal.energyLevelColour();
+                    if (energyLevel == 0) {
+                        circle.setFill(Color.RED);
+                    } else if (energyLevel == 1) {
+                        circle.setFill(Color.ORANGE);
+                    } else {
+                        circle.setFill(Color.YELLOW);
+                    }
+                } else {
+                    circle.setFill(Color.DARKGREEN);
+                }
+                pane.getChildren().add(circle);
+            }
         }
         mapGrid.add(pane, col, row);
     }
