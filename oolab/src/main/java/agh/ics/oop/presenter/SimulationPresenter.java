@@ -1,8 +1,10 @@
 package agh.ics.oop.presenter;
 
+import agh.ics.oop.Simulation;
 import agh.ics.oop.model.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
@@ -19,10 +21,18 @@ public class SimulationPresenter {
     private Label infoLabel;
     @FXML
     private Label moveInfoLabel;
+    @FXML
+    private Button simulationStartStopButton;
+
+    Simulation simulation;
 
     public void setWorldMap(GlobeMap worldMap) {
         this.worldMap = worldMap;
         clearGrid();
+    }
+
+    public void setSimulation(Simulation simulation) {
+        this.simulation = simulation;
     }
 
     private void clearGrid() {
@@ -109,45 +119,6 @@ public class SimulationPresenter {
         mapGrid.add(pane, col, row);
     }
 
-
-//    private void addGridCell(Vector2d position, int col, int row) {
-//        Label label;
-//        WorldElement element = worldMap.objectAt(position);
-//
-//        if (worldMap.isWaterAt(position)) {
-//            label = createLabel("■");
-//            label.setTextFill(Color.BLUE);
-//            label.autosize();
-//        }
-//        else if (element != null) {
-//            if (element.toString().equals("A")) {
-//                label = createLabel("■");
-//
-//                Animal animal = (Animal) element;
-//                int energyLevel = animal.energyLevelColour();
-//                if(energyLevel == 0){
-//                    label.setTextFill(Color.YELLOW);
-//                }
-//                else if(energyLevel == 1){
-//                    label.setTextFill(Color.ORANGE);
-//                }
-//                else {
-//                    label.setTextFill(Color.RED);
-//                }
-//                label.autosize();
-//            }
-//            else {
-//                label = createLabel("■");
-//                label.setTextFill(Color.GREEN);
-//                label.autosize();
-//            }
-//        }
-//        else {
-//            label = createLabel(" ");
-//        }
-//        mapGrid.add(label, col, row);
-//    }
-
     private Label createLabel(String text) {
         Label label = new Label(text);
         Boundary boundary = worldMap.getBoundary();
@@ -171,12 +142,16 @@ public class SimulationPresenter {
         infoLabel.setText("");
     }
 
-//    @Override
     public void mapChanged(String message) {
         Platform.runLater(() -> {
             clearGrid();
             drawMap();
             moveInfoLabel.setText(message);
         });
+    }
+
+    @FXML
+    private void onSimulationStartStopButtonClicked() {
+        this.simulation.startStopSimulation();
     }
 }

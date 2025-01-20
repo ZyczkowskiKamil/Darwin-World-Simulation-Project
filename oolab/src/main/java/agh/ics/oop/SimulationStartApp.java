@@ -168,6 +168,7 @@ public class SimulationStartApp extends Application {
 
             // Create and start simulation
             Simulation simulation = new Simulation(simulationPresenter, worldMap, parameters);
+            simulationPresenter.setSimulation(simulation);
 
             // Create new scene and show it
             Stage stage = (Stage) startSimulationButton.getScene().getWindow();

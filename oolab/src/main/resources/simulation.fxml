@@ -13,6 +13,8 @@
             fx:controller="agh.ics.oop.presenter.SimulationPresenter">
     <center>
         <VBox spacing="10" alignment="CENTER">
+            <Button fx:id="simulationStartStopButton" text="Start/stop Simulation" onAction="#onSimulationStartStopButtonClicked"/>
+
             <GridPane fx:id="mapGrid" gridLinesVisible="true"/>
             <Label fx:id="infoLabel"/>
             <Label fx:id="moveInfoLabel"/>
