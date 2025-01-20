@@ -10,6 +10,7 @@ public class Simulation {
     private final GlobeMap map;
     private boolean running;
 
+
     int NUMBER_OF_GRASS_GROWING_DAILY;
     int MAP_REFRESH_TIME_MS;
     int WATER_CHANGE_DAYS;
@@ -28,6 +29,7 @@ public class Simulation {
     }
 
     public void run() {
+
 
         int simulationDay = 1;
 
@@ -49,6 +51,7 @@ public class Simulation {
             map.placeGrasses(NUMBER_OF_GRASS_GROWING_DAILY);
             map.animalAging();
             presenter.mapChanged("Day: " + simulationDay + " " + map.returnAllStatistics());
+
             try {
                 Thread.sleep(MAP_REFRESH_TIME_MS);
             } catch (InterruptedException e) {

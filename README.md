@@ -1,7 +1,45 @@
-# Darwin-World-Simulation-Project
+---
+# Project: Darwin's Animal Simulation on a Map
+---
 
-Autorzy: \
-Kamil Życzkowski \
-Bartosz Budzyn \
-Grupa 6. \
-Utrudnienia: C4
+### Description:
+
+This project is a simulation of an environment inspired by Darwin's theory, where animals fight for survival in a dynamically changing environment. The implementation is written in Java.
+
+### Project Assignment:
+
+The project assignment can be found [here](https://github.com/Soamid/obiektowe-lab/tree/master/proj).
+
+### Authors:
+
+The project was developed by the following individuals:
+
+1. **Bartosz Budzyn**
+2. **Kamil Życzkowski**
+
+### Additional Features:
+
+Our project group focused on the following elements:
+
+C: Water Map\
+4: Aging animals
+
+### Division of work:
+
+**Bartosz Budzyn:**
+- Aging animals
+- Genes
+- Utilities: Vector2d,MoveDirection,Boundary
+- Parameters
+
+**Kamil Życzkowski:**
+- Water on map
+- Animals
+- Map generation
+- Grass
+
+**Together:**
+- Project setup
+- GUI
+- Statistics
+- Simulation

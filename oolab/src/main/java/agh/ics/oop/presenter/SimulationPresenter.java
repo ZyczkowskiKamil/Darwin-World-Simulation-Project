@@ -46,6 +46,7 @@ public class SimulationPresenter {
     private void clearGrid() {
         if(!mapGrid.getChildren().isEmpty())
             mapGrid.getChildren().retainAll(mapGrid.getChildren().getFirst()); // hack to retain visible grid lines
+
         mapGrid.getColumnConstraints().clear();
         mapGrid.getRowConstraints().clear();
     }
