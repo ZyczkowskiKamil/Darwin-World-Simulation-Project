@@ -49,10 +49,6 @@ public class Animal implements WorldElement {
         return position;
     }
 
-    public MoveDirection getAnimalOrientation() {
-        return animalOrientation;
-    }
-
     @Override
     public String toString() {
         return "A";

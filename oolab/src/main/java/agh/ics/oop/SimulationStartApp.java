@@ -4,7 +4,6 @@ import agh.ics.oop.model.GlobeMap;
 import agh.ics.oop.presenter.SimulationPresenter;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +13,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.nio.channels.FileChannel;
 
 public class SimulationStartApp extends Application {
     @FXML
@@ -183,42 +181,6 @@ public class SimulationStartApp extends Application {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void copyFileToFile(final File src, final File dest) throws IOException
-    {
-        copyInputStreamToFile(new FileInputStream(src), dest);
-        dest.setLastModified(src.lastModified());
-    }
-
-    public static void copyInputStreamToFile(final InputStream in, final File dest)
-            throws IOException
-    {
-        copyInputStreamToOutputStream(in, new FileOutputStream(dest));
-    }
-
-
-    public static void copyInputStreamToOutputStream(final InputStream in,
-                                                     final OutputStream out) throws IOException
-    {
-        try
-        {
-            try
-            {
-                final byte[] buffer = new byte[1024];
-                int n;
-                while ((n = in.read(buffer)) != -1)
-                    out.write(buffer, 0, n);
-            }
-            finally
-            {
-                out.close();
-            }
-        }
-        finally
-        {
-            in.close();
         }
     }
 

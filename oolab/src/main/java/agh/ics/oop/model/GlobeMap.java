@@ -21,7 +21,6 @@ public class GlobeMap implements WorldMap {
     int deadAnimalNumber = 0;
     int deadAnimalAgeSum = 0;
 
-
     public GlobeMap(Parameters parameters) {
         this.mapHeight = parameters.MAP_HEIGHT;
         this.mapWidth = parameters.MAP_WIDTH;

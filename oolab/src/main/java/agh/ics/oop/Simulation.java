@@ -9,12 +9,9 @@ public class Simulation {
     private final SimulationPresenter presenter;
     private final GlobeMap map;
 
-    private Thread thread;
-
     int NUMBER_OF_GRASS_GROWING_DAILY;
     int MAP_REFRESH_TIME_MS;
     int WATER_CHANGE_DAYS;
-
 
     public Simulation(SimulationPresenter presenter, GlobeMap worldMap, Parameters parameters) {
         this.presenter = presenter;
@@ -59,10 +56,11 @@ public class Simulation {
     }
 
     public void runAsync() {
-        thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             try {
                 run();
-            } catch (Exception exception) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
         thread.start();
