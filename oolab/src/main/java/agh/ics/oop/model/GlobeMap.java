@@ -9,6 +9,7 @@ public class GlobeMap implements WorldMap {
     private final Boundary equatorBoundary;
     private final Map<Vector2d, Integer> waterSources = new HashMap<>(); // water source position and it's state of power
     private final Set<Vector2d> waterPlaces = new HashSet<>();
+    private final List<DailyStatistics> dailyStatistics = new ArrayList<>();
 
     private final int energyAddedAfterEatingGrass;
     private final int breedingReadyAnimalEnergy;
@@ -367,6 +368,31 @@ public class GlobeMap implements WorldMap {
             }
         }
         return Math.round((double) kidSum / numberOfAnimalsAlive() * 100.0) / 100.0;
+    }
+
+    public String returnAllStatistics() {
+
+        DailyStatistics dailyStat = new DailyStatistics(
+                dailyStatistics.size() + 1,
+                numberOfAnimalsAlive(),
+                getGrassNumber(),
+                getFreePlacesNumber(),
+                getAverageAnimalEnergy(),
+                getAverageDeadAnimalAge(),
+                getAverageKidsAmount()
+        );
+        dailyStatistics.add(dailyStat);
+
+        return("Animals: " + dailyStat.getAverageDeadAnimalAge() + " "
+                + "Grasses: " + dailyStat.getNumberOfGrasses() + " "
+                + "Free places: " + dailyStat.getNumberOfFreeSpaces() + " "
+                + "Average energy: " + dailyStat.getAverageEnergy() + " "
+                + "Average dead animal age: " + dailyStat.getAverageDeadAnimalAge() + " "
+                + "Average kids amount: " + dailyStat.getAverageKidsAmount());
+    }
+
+    public List<DailyStatistics> getDailyStatistics() {
+        return dailyStatistics;
     }
 
 }

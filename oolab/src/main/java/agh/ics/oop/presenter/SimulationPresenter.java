@@ -10,6 +10,12 @@ import javafx.scene.layout.GridPane;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 import static java.util.Collections.min;
 
@@ -23,6 +29,8 @@ public class SimulationPresenter {
     private Label moveInfoLabel;
     @FXML
     private Button simulationStartStopButton;
+    @FXML
+    private Button saveStatsButton;
 
     Simulation simulation;
 
@@ -173,5 +181,33 @@ public class SimulationPresenter {
     @FXML
     private void onSimulationStartStopButtonClicked() {
         this.simulation.startStopSimulation();
+    }
+
+    @FXML
+    private void onSaveStatsButtonClicked() {
+        List<DailyStatistics> dailyStatistics = worldMap.getDailyStatistics();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Statistics");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showSaveDialog(mapGrid.getScene().getWindow());
+
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.append("Day,Animals,Grass,Free Spaces,Average Energy,Average Dead Animal Age, Average Kids Amount\n");
+                for (DailyStatistics stats : dailyStatistics) {
+                    writer.append(String.valueOf(stats.getDay())).append(",")
+                            .append(String.valueOf(stats.getNumberOfAnimals())).append(",")
+                            .append(String.valueOf(stats.getNumberOfGrasses())).append(",")
+                            .append(String.valueOf(stats.getNumberOfFreeSpaces())).append(",")
+                            .append(String.valueOf(stats.getAverageEnergy())).append(",")
+                            .append(String.valueOf(stats.getAverageDeadAnimalAge())).append(",")
+                            .append(String.valueOf(stats.getAverageKidsAmount())).append("\n");
+                }
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

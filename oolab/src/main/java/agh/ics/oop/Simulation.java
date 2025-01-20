@@ -48,13 +48,7 @@ public class Simulation {
             if (simulationDay % WATER_CHANGE_DAYS == 0) map.updateWater();
             map.placeGrasses(NUMBER_OF_GRASS_GROWING_DAILY);
             map.animalAging();
-            presenter.mapChanged("Day: " + simulationDay + " "
-                    + "Animals: " + map.numberOfAnimalsAlive() + " "
-                    + "Grasses: " + map.getGrassNumber() + " "
-                    + "Free places: " + map.getFreePlacesNumber() + " "
-                    + "Average energy: " + map.getAverageAnimalEnergy() + " "
-                    + "Average dead animal age: " + map.getAverageDeadAnimalAge() + " "
-                    + "Average kids amount: " + map.getAverageKidsAmount());
+            presenter.mapChanged("Day: " + simulationDay + " " + map.returnAllStatistics());
             try {
                 Thread.sleep(MAP_REFRESH_TIME_MS);
             } catch (InterruptedException e) {
