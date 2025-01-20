@@ -22,4 +22,24 @@ The project was developed by the following individuals:
 Our project group focused on the following elements:
 
 C: Water Map\
-4: Aging animals
+4: Aging animals\
+
+### Work distribution:
+
+**Bartosz Budzyn:**
+- Aging animals\
+- Genes\
+- Utilities: Vector2d,MoveDirection,Boundary\
+- Parameters\
+
+**Kamil Życzkowski:**
+- Water on map\
+- Animals\
+- Map generation\
+- Grass\
+
+**Together:**
+- Project setup\
+- GUI\
+- Statistics\
+- Simulation
