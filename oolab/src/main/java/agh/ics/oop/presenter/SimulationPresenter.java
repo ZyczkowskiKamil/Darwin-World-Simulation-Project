@@ -45,26 +45,32 @@ public class SimulationPresenter {
     private void renderAxisLabels(Boundary boundary) {
         renderHorizontalAxis(boundary);
         renderVerticalAxis(boundary);
-        placeCenterIndicator();
+        placeCenterIndicators(boundary);
     }
 
     private void renderHorizontalAxis(Boundary boundary) {
         int minX = boundary.BOTTOM_LEFT().getX();
         int maxX = boundary.TOP_RIGHT().getX();
+        int maxY = boundary.TOP_RIGHT().getY();
 
         for (int x = minX; x <= maxX; x++) {
             Label label = createLabel(String.valueOf(""));
+            Label label2 = createLabel(String.valueOf(""));
             mapGrid.add(label, x - minX + 1, 0);
+            mapGrid.add(label2, x - minX + 1, maxY+1);
         }
     }
 
     private void renderVerticalAxis(Boundary boundary) {
         int minY = boundary.BOTTOM_LEFT().getY();
         int maxY = boundary.TOP_RIGHT().getY();
+        int maxX = boundary.TOP_RIGHT().getX();
 
         for (int y = minY; y <= maxY; y++) {
             Label label = createLabel(String.valueOf(""));
-            mapGrid.add(label, 0, maxY - y + 1);
+            Label label2 = createLabel(String.valueOf(""));
+            mapGrid.add(label2, 0, maxY - y + 1);
+            mapGrid.add(label, maxX+1, maxY - y + 1);
         }
     }
 
@@ -129,9 +135,20 @@ public class SimulationPresenter {
         return label;
     }
 
-    private void placeCenterIndicator() {
+    private void placeCenterIndicators(Boundary boundary) {
+        int maxY = boundary.TOP_RIGHT().getY();
+        int maxX = boundary.TOP_RIGHT().getX();
         Label centerLabel = createLabel("");
+        Label centerLabel2 = createLabel("");
+        Label centerLabel3 = createLabel("");
+        Label centerLabel4 = createLabel("");
+
+
         mapGrid.add(centerLabel, 0, 0);
+        mapGrid.add(centerLabel2, maxX+2, 0);
+        mapGrid.add(centerLabel3, 0, maxY+2);
+        mapGrid.add(centerLabel4, maxX+2, maxY+2);
+
     }
 
     @FXML
