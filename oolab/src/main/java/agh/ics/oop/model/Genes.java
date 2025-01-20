@@ -51,7 +51,7 @@ public class Genes {
             Random rand = new Random();
             int firstSide = rand.nextInt(2);
             if (firstSide == 0) {
-                // pierwszy z lewej
+                // first add genes from left side
                 for (int i = 0; i < genes1ToPass; i++) {
                     newGenes.add(this.genesList.get(i));
                 }
@@ -60,7 +60,7 @@ public class Genes {
                 }
             }
             else {
-                // pierwszy z prawej
+                // first add genes from right animal
                 for (int i = 0; i < genes2ToPass; i++) {
                     newGenes.add(genes2.genesList.get(i));
                 }

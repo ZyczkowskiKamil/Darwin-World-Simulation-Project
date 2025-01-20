@@ -9,17 +9,22 @@ public class GlobeMap implements WorldMap {
     private final Boundary equatorBoundary;
     private final Map<Vector2d, Integer> waterSources = new HashMap<>(); // water source position and it's state of power
     private final Set<Vector2d> waterPlaces = new HashSet<>();
+    private final List<DailyStatistics> dailyStatistics = new ArrayList<>();
 
     private final int energyAddedAfterEatingGrass;
     private final int breedingReadyAnimalEnergy;
     private final int energyLostInReproduction;
     private final int waterAreasMinSize;
     private final int waterAreasMaxSize;
+    private final int mapHeight;
+    private final int mapWidth;
 
+    int deadAnimalNumber = 0;
+    int deadAnimalAgeSum = 0;
 
     public GlobeMap(Parameters parameters) {
-        int mapHeight = parameters.MAP_HEIGHT;
-        int mapWidth = parameters.MAP_WIDTH;
+        this.mapHeight = parameters.MAP_HEIGHT;
+        this.mapWidth = parameters.MAP_WIDTH;
         int startAnimalNumber = parameters.START_ANIMAL_NUMBER;
         int startAnimalEnergy = parameters.START_ANIMAL_ENERGY;
         int grassStartAmount = parameters.GRASS_START_AMOUNT;
@@ -155,8 +160,11 @@ public class GlobeMap implements WorldMap {
     }
 
     @Override
-    public WorldElement objectAt(Vector2d position) { /// //////////
-        return new Grass(new Vector2d(2,2)); ////////// do napisania
+    public WorldElement objectAt(Vector2d position) {
+        if (animals.containsKey(position))
+            return findWinningAnimal(position);
+        if (grasses.containsKey(position)) return grasses.get(position);
+        return null;
     }
 
     @Override
@@ -171,6 +179,8 @@ public class GlobeMap implements WorldMap {
         ArrayList<Animal> animalList = animalsAt(animal.getPosition());
         animalList.remove(animal);
         animals.put(animal.getPosition(), animalList);
+        deadAnimalAgeSum += animal.getAge();
+        deadAnimalNumber ++;
     }
 
     @Override
@@ -266,7 +276,7 @@ public class GlobeMap implements WorldMap {
     public int numberOfAnimalsAlive() {
         int count = 0;
         for (ArrayList<Animal> animalList : animals.values()) {
-            count += animalList.size();  // Sum the size of each list of animals
+            count += animalList.size();
         }
         return count;
     }
@@ -315,4 +325,74 @@ public class GlobeMap implements WorldMap {
             }
         }
     }
+
+    public int getGrassNumber() {
+        return grasses.keySet().size();
+    }
+
+    public int getWaterNumber() {
+        return waterPlaces.size();
+    }
+
+    public int getFreePlacesNumber() {
+        return mapHeight * mapWidth - getWaterNumber() - getGrassNumber() - numberOfAnimalsAlive();
+    }
+
+    public double getAverageAnimalEnergy() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+        int energySum = 0;
+
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = new ArrayList<>(animalsAt(position));
+            for (Animal animal : animalList) {
+                energySum += animal.getEnergy();
+            }
+        }
+        return Math.round((double) energySum / numberOfAnimalsAlive() * 100.0) / 100.0;
+    }
+
+    public double getAverageDeadAnimalAge() {
+        if(deadAnimalNumber == 0)
+            return 0;
+        return Math.round((double) deadAnimalAgeSum / deadAnimalNumber * 100.0) / 100.0;
+    }
+
+    public double getAverageKidsAmount() {
+        Set<Vector2d> positions = new HashSet<>(animals.keySet());
+        int kidSum = 0;
+
+        for (Vector2d position : positions) {
+            ArrayList<Animal> animalList = new ArrayList<>(animalsAt(position));
+            for (Animal animal : animalList) {
+                kidSum += animal.getKidsAmount();
+            }
+        }
+        return Math.round((double) kidSum / numberOfAnimalsAlive() * 100.0) / 100.0;
+    }
+
+    public String returnAllStatistics() {
+
+        DailyStatistics dailyStat = new DailyStatistics(
+                dailyStatistics.size() + 1,
+                numberOfAnimalsAlive(),
+                getGrassNumber(),
+                getFreePlacesNumber(),
+                getAverageAnimalEnergy(),
+                getAverageDeadAnimalAge(),
+                getAverageKidsAmount()
+        );
+        dailyStatistics.add(dailyStat);
+
+        return("Animals: " + dailyStat.getAverageDeadAnimalAge() + " "
+                + "Grasses: " + dailyStat.getNumberOfGrasses() + " "
+                + "Free places: " + dailyStat.getNumberOfFreeSpaces() + " "
+                + "Average energy: " + dailyStat.getAverageEnergy() + " "
+                + "Average dead animal age: " + dailyStat.getAverageDeadAnimalAge() + " "
+                + "Average kids amount: " + dailyStat.getAverageKidsAmount());
+    }
+
+    public List<DailyStatistics> getDailyStatistics() {
+        return dailyStatistics;
+    }
+
 }

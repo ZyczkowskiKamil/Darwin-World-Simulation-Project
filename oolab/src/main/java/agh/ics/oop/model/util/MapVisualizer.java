@@ -13,6 +13,7 @@ public class MapVisualizer {
 
     public MapVisualizer(WorldMap map) {
         this.map = map;
+
         boundary = this.map.getBoundary();
     }
 

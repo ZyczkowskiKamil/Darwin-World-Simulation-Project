@@ -9,17 +9,16 @@
 <?import javafx.scene.layout.GridPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="550.0" minWidth="850.0"
+            minHeight="750.0" minWidth="1050.0"
             fx:controller="agh.ics.oop.presenter.SimulationPresenter">
     <center>
-        <VBox>
-            <HBox>
-                <TextField fx:id="movesListTextField"/>
-                <Label fx:id="moveInfoLabel"/>
-            </HBox>
-            <Button fx:id="startSimulationButton" text="Start simulation" onAction="#onSimulationStartClicked"/>
-            <Label fx:id="infoLabel" text="All animals will be living here!" textAlignment="CENTER"/>
+        <VBox spacing="10" alignment="CENTER">
+            <Button fx:id="simulationStartStopButton" text="Start/stop Simulation" onAction="#onSimulationStartStopButtonClicked"/>
+            <Button fx:id="saveStatsButton" text="Save Statistics to CSV (from day 0 to now)" onAction="#onSaveStatsButtonClicked"/>
+
             <GridPane fx:id="mapGrid" gridLinesVisible="true"/>
+            <Label fx:id="infoLabel"/>
+            <Label fx:id="moveInfoLabel"/>
         </VBox>
     </center>
 </BorderPane>

@@ -5,10 +5,10 @@ import java.util.Random;
 
 public class Animal implements WorldElement {
 
-    private final static Parameters PARAMETERS;
+    private final static Parameters parameters;
     static {
         try {
-            PARAMETERS = new Parameters();
+            parameters = new Parameters();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -23,9 +23,12 @@ public class Animal implements WorldElement {
     private int kidsAmount;
     private int age;
     private int energy;
+    private double moveSkipProbability;
 
-    private static final int ENERGY_NEEDED_FOR_MOVEMENT = PARAMETERS.ENERGY_NEEDED_FOR_MOVEMENT;
-    private static final int GENES_LENGTH = PARAMETERS.GENES_LENGTH;
+    private static final int ENERGY_NEEDED_FOR_MOVEMENT = parameters.ENERGY_NEEDED_FOR_MOVEMENT;
+    private static final int GENES_LENGTH = parameters.GENES_LENGTH;
+    private static final boolean AGING_ANIMALS = parameters.AGING_ANIMALS;
+    private static final int BREEDING_READY_ANIMAL_ENERGY = parameters.BREEDING_READY_ANIMAL_ENERGY;
 
     public Animal(Vector2d position, Genes genes, int energy){
         this.position = position;
@@ -34,6 +37,7 @@ public class Animal implements WorldElement {
         this.energy = energy;
         this.kidsAmount = 0;
         this.age = 0;
+        this.moveSkipProbability = 0.0;
 
         Random rand = new Random();
         this.animalOrientation = MoveDirection.valueToMoveDirection(rand.nextInt(8));
@@ -46,18 +50,46 @@ public class Animal implements WorldElement {
         return position;
     }
 
-    public MoveDirection getAnimalOrientation() {
-        return animalOrientation;
-    }
-
     @Override
     public String toString() {
         return "A";
     }
 
+    public int energyLevelColour() {
+        double colorLevel = (double) 10 * ENERGY_NEEDED_FOR_MOVEMENT / 3;
+        if (energy >= BREEDING_READY_ANIMAL_ENERGY) {
+            return 3;
+        }
+        if (energy < colorLevel) {
+            return 0;
+        }
+        else if (energy < 2 * colorLevel) {
+            return 1;
+        }
+        else {
+            return 2;
+        }
+    }
+
+    private void decreaseSpeed() {
+        if (moveSkipProbability < 0.8) {
+            moveSkipProbability += (double) age / 120;
+            if (moveSkipProbability > 0.8)
+                moveSkipProbability = 0.8;
+        }
+    }
+
     public void move(Boundary boundary) {
         this.previousPosition = position;
         this.removeEnergy(ENERGY_NEEDED_FOR_MOVEMENT);
+
+        if (AGING_ANIMALS) {
+            decreaseSpeed();
+            Random rand = new Random();
+            if (rand.nextDouble() < moveSkipProbability) {
+                return;
+            }
+        }
 
         int rotationNumber = this.genes.getGenesList().get(nextGene);
         nextGene = (nextGene + 1) % GENES_LENGTH;

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            minHeight="800.0" minWidth="1200.0"
+            fx:controller="agh.ics.oop.SimulationStartApp">
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+
+            <GridPane hgap="10" vgap="10">
+                <Label text="MAP_REFRESH_TIME_MS:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="mapRefreshTimeMsField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                <Label text="MAP_HEIGHT:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="mapHeightField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                <Label text="MAP_WIDTH:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="mapWidthField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                <Label text="GRASS_START_AMOUNT:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="grassStartAmountField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                <Label text="ENERGY_ADDED_AFTER_EATING_GRASS:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="energyAddedAfterEatingGrassField" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                <Label text="NUMBER_OF_GRASS_GROWING_DAILY:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                <TextField fx:id="numberOfGrassGrowingDailyField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                <Label text="START_ANIMAL_NUMBER:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                <TextField fx:id="startAnimalNumberField" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                <Label text="START_ANIMAL_ENERGY:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                <TextField fx:id="startAnimalEnergyField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+                <Label text="BREEDING_READY_ANIMAL_ENERGY:" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+                <TextField fx:id="breedingReadyAnimalEnergyField" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                <Label text="ENERGY_LOST_IN_REPRODUCTION:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                <TextField fx:id="energyLostInReproductionField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+
+                <Label text="MIN_MUTATION_NUMBER:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="minMutationNumberField" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                <Label text="MAX_MUTATION_NUMBER:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="maxMutationNumberField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                <Label text="GENES_LENGTH:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField fx:id="genesLengthField" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                <Label text="AGING_ANIMALS:" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <TextField fx:id="agingAnimalsField" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+
+                <Label text="ENERGY_NEEDED_FOR_MOVEMENT:" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <TextField fx:id="energyNeededForMovementField" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
+
+                <Label text="WATER_AREAS_NUMBER:" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterAreasNumberField" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
+
+                <Label text="WATER_AREAS_MIN_SIZE:" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterAreasMinSizeField" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
+
+                <Label text="WATER_AREAS_MAX_SIZE:" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterAreasMaxSizeField" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
+
+                <Label text="WATER_CHANGE_DAYS:" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterChangeDaysField" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
+
+            </GridPane>
+            <Button fx:id="startSimulationButton" text="Start Simulation" onAction="#onSimulationStartClicked"/>
+
+            <Label text="Parameters file name:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <TextField fx:id="parametersFileName" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
+
+            <Label text="Get parameters from file" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <Button fx:id="getParametersFromFileButton" text="Get parameters from file" onAction="#onParametersGetButtonClicked"/>
+            <Label text="Save parameters to file:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <Button fx:id="saveParametersToFileButton" text="Save parameters to file" onAction="#onParametersSaveButtonClicked"/>
+            <Label text="Message:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+            <TextField fx:id="userFileButtonMessage" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
+        </VBox>
+    </center>
+</BorderPane>
