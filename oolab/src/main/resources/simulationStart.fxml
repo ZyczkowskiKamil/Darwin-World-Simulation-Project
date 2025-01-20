@@ -9,7 +9,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            minHeight="800.0" minWidth="850.0"
+            minHeight="800.0" minWidth="1200.0"
             fx:controller="agh.ics.oop.SimulationStartApp">
     <center>
         <VBox spacing="10" alignment="CENTER">
@@ -45,34 +45,32 @@
                 <Label text="ENERGY_LOST_IN_REPRODUCTION:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
                 <TextField fx:id="energyLostInReproductionField" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
 
-                <Label text="MIN_MUTATION_NUMBER:" GridPane.rowIndex="10" GridPane.columnIndex="0"/>
-                <TextField fx:id="minMutationNumberField" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+                <Label text="MIN_MUTATION_NUMBER:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                <TextField fx:id="minMutationNumberField" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
-                <Label text="MAX_MUTATION_NUMBER:" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
-                <TextField fx:id="maxMutationNumberField" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
+                <Label text="MAX_MUTATION_NUMBER:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                <TextField fx:id="maxMutationNumberField" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
-                <Label text="GENES_LENGTH:" GridPane.rowIndex="12" GridPane.columnIndex="0"/>
-                <TextField fx:id="genesLengthField" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+                <Label text="GENES_LENGTH:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                <TextField fx:id="genesLengthField" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
-                <Label text="AGING_ANIMALS:" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
-                <TextField fx:id="agingAnimalsField" GridPane.rowIndex="13" GridPane.columnIndex="1"/>
+                <Label text="AGING_ANIMALS:" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                <TextField fx:id="agingAnimalsField" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
 
-                <Label text="ENERGY_NEEDED_FOR_MOVEMENT:" GridPane.rowIndex="14" GridPane.columnIndex="0"/>
-                <TextField fx:id="energyNeededForMovementField" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
+                <Label text="ENERGY_NEEDED_FOR_MOVEMENT:" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
+                <TextField fx:id="energyNeededForMovementField" GridPane.rowIndex="4" GridPane.columnIndex="3"/>
 
-                <Label text="WATER_AREAS_NUMBER:" GridPane.rowIndex="15" GridPane.columnIndex="0"/>
-                <TextField fx:id="waterAreasNumberField" GridPane.rowIndex="15" GridPane.columnIndex="1"/>
+                <Label text="WATER_AREAS_NUMBER:" GridPane.rowIndex="5" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterAreasNumberField" GridPane.rowIndex="5" GridPane.columnIndex="3"/>
 
-                <Label text="WATER_AREAS_MIN_SIZE:" GridPane.rowIndex="16" GridPane.columnIndex="0"/>
-                <TextField fx:id="waterAreasMinSizeField" GridPane.rowIndex="16" GridPane.columnIndex="1"/>
+                <Label text="WATER_AREAS_MIN_SIZE:" GridPane.rowIndex="6" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterAreasMinSizeField" GridPane.rowIndex="6" GridPane.columnIndex="3"/>
 
-                <Label text="WATER_AREAS_MAX_SIZE:" GridPane.rowIndex="17" GridPane.columnIndex="0"/>
-                <TextField fx:id="waterAreasMaxSizeField" GridPane.rowIndex="17" GridPane.columnIndex="1"/>
+                <Label text="WATER_AREAS_MAX_SIZE:" GridPane.rowIndex="7" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterAreasMaxSizeField" GridPane.rowIndex="7" GridPane.columnIndex="3"/>
 
-                <Label text="WATER_CHANGE_DAYS:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
-                <TextField fx:id="waterChangeDaysField" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
-
-
+                <Label text="WATER_CHANGE_DAYS:" GridPane.rowIndex="8" GridPane.columnIndex="2"/>
+                <TextField fx:id="waterChangeDaysField" GridPane.rowIndex="8" GridPane.columnIndex="3"/>
 
             </GridPane>
             <Button fx:id="startSimulationButton" text="Start Simulation" onAction="#onSimulationStartClicked"/>
