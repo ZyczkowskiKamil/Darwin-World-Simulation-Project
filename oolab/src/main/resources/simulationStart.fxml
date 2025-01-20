@@ -13,7 +13,6 @@
             fx:controller="agh.ics.oop.SimulationStartApp">
     <center>
         <VBox spacing="10" alignment="CENTER">
-            <Button fx:id="startSimulationButton" text="Start Simulation" onAction="#onSimulationStartClicked"/>
 
             <GridPane hgap="10" vgap="10">
                 <Label text="MAP_REFRESH_TIME_MS:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
@@ -73,7 +72,10 @@
                 <Label text="WATER_CHANGE_DAYS:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
                 <TextField fx:id="waterChangeDaysField" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
 
+
+
             </GridPane>
+            <Button fx:id="startSimulationButton" text="Start Simulation" onAction="#onSimulationStartClicked"/>
 
             <Label text="Parameters file name:" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
             <TextField fx:id="parametersFileName" GridPane.rowIndex="18" GridPane.columnIndex="1"/>
