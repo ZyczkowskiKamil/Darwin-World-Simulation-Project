@@ -105,7 +105,10 @@ public class SimulationPresenter {
             if (element.toString().equals("A")) {
                 Animal animal = (Animal) element;
                 int energyLevel = animal.energyLevelColour();
-                if(energyLevel == 0){
+                if (energyLevel == 3) { // reproduction ready
+                    pane.setStyle("-fx-background-color: BROWN;");
+                }
+                else if(energyLevel == 0){
                     pane.setStyle("-fx-background-color: RED;");
                 }
                 else if(energyLevel == 1){

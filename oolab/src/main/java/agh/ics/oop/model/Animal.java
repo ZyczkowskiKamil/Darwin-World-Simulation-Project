@@ -28,6 +28,7 @@ public class Animal implements WorldElement {
     private static final int ENERGY_NEEDED_FOR_MOVEMENT = parameters.ENERGY_NEEDED_FOR_MOVEMENT;
     private static final int GENES_LENGTH = parameters.GENES_LENGTH;
     private static final boolean AGING_ANIMALS = parameters.AGING_ANIMALS;
+    private static final int BREEDING_READY_ANIMAL_ENERGY = parameters.BREEDING_READY_ANIMAL_ENERGY;
 
     public Animal(Vector2d position, Genes genes, int energy){
         this.position = position;
@@ -56,6 +57,9 @@ public class Animal implements WorldElement {
 
     public int energyLevelColour() {
         double colorLevel = (double) 10 * ENERGY_NEEDED_FOR_MOVEMENT / 3;
+        if (energy >= BREEDING_READY_ANIMAL_ENERGY) {
+            return 3;
+        }
         if (energy < colorLevel) {
             return 0;
         }
